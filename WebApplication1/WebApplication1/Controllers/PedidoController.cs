@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -6,31 +5,27 @@ using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    [Route("api/comerciotelefono")]
+    [Route("api/pedido")]
     [ApiController]
-    public class Comercio_Telefono_Controller : ControllerBase
+    public class PedidoController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        private readonly IWebHostEnvironment _env;
-        public Comercio_Telefono_Controller(IConfiguration configuration, IWebHostEnvironment env)
+        public PedidoController(IConfiguration configuration)
         {
             _configuration = configuration;
-            _env = env;
         }
 
         [HttpGet]
         public JsonResult Get()
         {
             string query = @"
-                select *
-                from comercio_telefono
+                select * from pedido
             ";
 
             DataTable table = new DataTable();
@@ -43,56 +38,63 @@ namespace WebApplication1.Controllers
                 {
                     myReader = myCommand.ExecuteReader();
                     table.Load(myReader);
-
                     myReader.Close();
                     myCon.Close();
-
                 }
             }
 
             return new JsonResult(table);
         }
 
-
         [HttpPost]
-        public JsonResult Post(Comercio_Telefono emp)
+        public JsonResult Post(Pedido emp)
         {
             string query = @"
-                insert into comercio_telefono (cedula,telefono) 
+                insert into pedido (id, id_direccion, cedula_cliente, id_repartidor, direc_exacta, comprobante) 
                 values(
-                    @cedula,
-                    @telefono
-                    )
-                    returning cedula
+                DEFAULT,
+                @id_direccion,
+                @cedula_cliente,
+                @id_repartidor,
+                @direc_exacta,
+                @comprobante
+                )
+                returning id_pedido
             ";
 
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("UbyAppCon");
-            object newCedula;
+            // NpgsqlDataReader myReader;
+            object newpedidoID;
             using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
             {
                 myCon.Open();
                 using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
                 {
+                    myCommand.Parameters.AddWithValue("@id_direccion", emp.id_direccion);
+                    myCommand.Parameters.AddWithValue("@cedula_cliente", emp.cedula_cliente);
+                    myCommand.Parameters.AddWithValue("@id_repartidor", emp.id_repartidor);
+                    myCommand.Parameters.AddWithValue("@direc_exacta", emp.direc_exacta);
+                    myCommand.Parameters.AddWithValue("@comprobante", emp.comprobante);
+                    newpedidoID = myCommand.ExecuteScalar();
 
-                    myCommand.Parameters.AddWithValue("@cedula", emp.cedula);
-                    myCommand.Parameters.AddWithValue("@telefono", emp.telefono);
-                    newCedula = myCommand.ExecuteScalar();
                     myCon.Close();
-
                 }
             }
-
-            return new JsonResult(newCedula);
+            return new JsonResult(newpedidoID);
         }
 
         [HttpPut]
-        public JsonResult Put(Comercio_Telefono emp)
+        public JsonResult Put(Pedido emp)
         {
             string query = @"
-                update comercio_telefono
-                set cedula = @cedula,
-                telefono = @telefono
+                update pedido
+                set id = @id,
+                id_direccion = @id_direccion,
+                cedula_cliente = @cedula_cliente,
+                id_repartidor = @id_repartidor,
+                direc_exacta = @direc_exacta,
+                comprobante = @comprobante
             ";
 
             DataTable table = new DataTable();
@@ -103,8 +105,11 @@ namespace WebApplication1.Controllers
                 myCon.Open();
                 using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
                 {
-                    myCommand.Parameters.AddWithValue("@cedula", emp.cedula);
-                    myCommand.Parameters.AddWithValue("@telefono", emp.telefono);
+                    myCommand.Parameters.AddWithValue("@id_direccion", emp.id_direccion);
+                    myCommand.Parameters.AddWithValue("@cedula_cliente", emp.cedula_cliente);
+                    myCommand.Parameters.AddWithValue("@id_repartidor", emp.id_repartidor);
+                    myCommand.Parameters.AddWithValue("@direc_exacta", emp.direc_exacta);
+                    myCommand.Parameters.AddWithValue("@comprobante", emp.comprobante);
                     myReader = myCommand.ExecuteReader();
                     table.Load(myReader);
 
@@ -118,11 +123,11 @@ namespace WebApplication1.Controllers
         }
 
         [HttpDelete("{id}")]
-        public JsonResult Delete(int cedula, int telefono)
+        public JsonResult Delete(int id)
         {
             string query = @"
-                delete from comercio_telefono
-                where cedula=@cedula and telefono=@telefono
+                delete from pedido
+                where id=@id 
             ";
 
             DataTable table = new DataTable();
@@ -133,8 +138,7 @@ namespace WebApplication1.Controllers
                 myCon.Open();
                 using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
                 {
-                    myCommand.Parameters.AddWithValue("@cedula", cedula);
-                    myCommand.Parameters.AddWithValue("@telefono", telefono);
+                    myCommand.Parameters.AddWithValue("@id", id);
                     myReader = myCommand.ExecuteReader();
                     table.Load(myReader);
 

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "iFlDeNXya7zUAFPKIPTK3WEIs1kIsRBhcahRcuhzsp9bHIDWc2E7lUDOC5snX2YG9dOGNdj9rjnrCMYWXAeqNQ==",
+  "dgSpecHash": "udx0ybzPveQh+WhF5JwZRN1U3YVbfAVXulElmcjUyEWO5RmMbLRik6CAiVO26hLfxqyeZdjVSWJpJSohjpNs8A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\danbg\\Desktop\\Proyecto2\\APIUbyTEC\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
+  "projectFilePath": "C:\\Users\\danbg\\Desktop\\UbyTec\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\danbg\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\3.1.16\\microsoft.aspnetcore.jsonpatch.3.1.16.nupkg.sha512",
     "C:\\Users\\danbg\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\3.1.16\\microsoft.aspnetcore.mvc.newtonsoftjson.3.1.16.nupkg.sha512",

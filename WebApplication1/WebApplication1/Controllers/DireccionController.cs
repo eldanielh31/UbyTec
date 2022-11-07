@@ -11,7 +11,7 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/direccion")]
     [ApiController]
     public class DireccionController : ControllerBase
     {

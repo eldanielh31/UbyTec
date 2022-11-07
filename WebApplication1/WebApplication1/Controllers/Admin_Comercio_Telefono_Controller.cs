@@ -122,11 +122,11 @@ namespace WebApplication1.Controllers
         }
 
         [HttpDelete("{id}")]
-        public JsonResult Delete(int cedula)
+        public JsonResult Delete(int cedula, int telefono)
         {
             string query = @"
                 delete from admin_comercio_telefono
-                where cedula=@cedula 
+                where cedula=@cedula and telefono=@telefono
             ";
 
             DataTable table = new DataTable();
@@ -138,6 +138,7 @@ namespace WebApplication1.Controllers
                 using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
                 {
                     myCommand.Parameters.AddWithValue("@cedula", cedula);
+                    myCommand.Parameters.AddWithValue("@telefono", telefono);
                     myReader = myCommand.ExecuteReader();
                     table.Load(myReader);
 

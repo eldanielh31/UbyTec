@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -6,31 +5,27 @@ using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    [Route("api/comerciotelefono")]
+    [Route("api/repartidor")]
     [ApiController]
-    public class Comercio_Telefono_Controller : ControllerBase
+    public class RepartidorController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        private readonly IWebHostEnvironment _env;
-        public Comercio_Telefono_Controller(IConfiguration configuration, IWebHostEnvironment env)
+        public RepartidorController(IConfiguration configuration)
         {
             _configuration = configuration;
-            _env = env;
         }
 
         [HttpGet]
         public JsonResult Get()
         {
             string query = @"
-                select *
-                from comercio_telefono
+                select * from repartidor
             ";
 
             DataTable table = new DataTable();
@@ -43,56 +38,70 @@ namespace WebApplication1.Controllers
                 {
                     myReader = myCommand.ExecuteReader();
                     table.Load(myReader);
-
                     myReader.Close();
                     myCon.Close();
-
                 }
             }
 
             return new JsonResult(table);
         }
 
-
         [HttpPost]
-        public JsonResult Post(Comercio_Telefono emp)
+        public JsonResult Post(Repartidor emp)
         {
             string query = @"
-                insert into comercio_telefono (cedula,telefono) 
+                insert into repartidor (id, usuario, id_direccion, contrasena, nombre, apellido1, apellido2, email) 
                 values(
-                    @cedula,
-                    @telefono
-                    )
-                    returning cedula
+                DEFAULT,
+                @usuario,
+                @id_direccion,
+                @contrasena,
+                @nombre,
+                @apellido1,
+                @apellido2,
+                @email
+                )
+                returning id
             ";
 
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("UbyAppCon");
-            object newCedula;
+            // NpgsqlDataReader myReader;
+            object newpedidoID;
             using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
             {
                 myCon.Open();
                 using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
                 {
+                    myCommand.Parameters.AddWithValue("@usuario", emp.usuario);
+                    myCommand.Parameters.AddWithValue("@id_direccion", emp.id_direccion);
+                    myCommand.Parameters.AddWithValue("@contrasena", emp.contrasena);
+                    myCommand.Parameters.AddWithValue("@nombre", emp.nombre);
+                    myCommand.Parameters.AddWithValue("@apellido1", emp.apellido1);
+                    myCommand.Parameters.AddWithValue("@apellido2", emp.apellido2);
+                    myCommand.Parameters.AddWithValue("@email", emp.email);
+                    newpedidoID = myCommand.ExecuteScalar();
 
-                    myCommand.Parameters.AddWithValue("@cedula", emp.cedula);
-                    myCommand.Parameters.AddWithValue("@telefono", emp.telefono);
-                    newCedula = myCommand.ExecuteScalar();
                     myCon.Close();
-
                 }
             }
-
-            return new JsonResult(newCedula);
+            return new JsonResult(newpedidoID);
         }
 
         [HttpPut]
-        public JsonResult Put(Comercio_Telefono emp)
+        public JsonResult Put(Repartidor emp)
         {
             string query = @"
-                update comercio_telefono
-                set cedula = @cedula,
-                telefono = @telefono
+                update repartidor
+                set 
+                id = @id,
+                usuario = @usuario,
+                id_direccion = @id_direccion,
+                contrasena = @contrasena,
+                nombre = @nombre,
+                apellido1 = @apellido1,
+                apellido2 = @apellido2,
+                email = @email
             ";
 
             DataTable table = new DataTable();
@@ -103,8 +112,14 @@ namespace WebApplication1.Controllers
                 myCon.Open();
                 using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
                 {
-                    myCommand.Parameters.AddWithValue("@cedula", emp.cedula);
-                    myCommand.Parameters.AddWithValue("@telefono", emp.telefono);
+                    myCommand.Parameters.AddWithValue("@id", emp.id);
+                    myCommand.Parameters.AddWithValue("@usuario", emp.usuario);
+                    myCommand.Parameters.AddWithValue("@id_direccion", emp.id_direccion);
+                    myCommand.Parameters.AddWithValue("@contrasena", emp.contrasena);
+                    myCommand.Parameters.AddWithValue("@nombre", emp.nombre);
+                    myCommand.Parameters.AddWithValue("@apellido1", emp.apellido1);
+                    myCommand.Parameters.AddWithValue("@apellido2", emp.apellido2);
+                    myCommand.Parameters.AddWithValue("@email", emp.email);
                     myReader = myCommand.ExecuteReader();
                     table.Load(myReader);
 
@@ -118,11 +133,11 @@ namespace WebApplication1.Controllers
         }
 
         [HttpDelete("{id}")]
-        public JsonResult Delete(int cedula, int telefono)
+        public JsonResult Delete(int id)
         {
             string query = @"
-                delete from comercio_telefono
-                where cedula=@cedula and telefono=@telefono
+                delete from repartidor
+                where id=@id
             ";
 
             DataTable table = new DataTable();
@@ -133,8 +148,7 @@ namespace WebApplication1.Controllers
                 myCon.Open();
                 using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
                 {
-                    myCommand.Parameters.AddWithValue("@cedula", cedula);
-                    myCommand.Parameters.AddWithValue("@telefono", telefono);
+                    myCommand.Parameters.AddWithValue("@id", id);
                     myReader = myCommand.ExecuteReader();
                     table.Load(myReader);
 

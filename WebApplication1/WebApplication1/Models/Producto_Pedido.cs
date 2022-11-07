@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace WebApplication1.Models
 {
-    public class Peducto_Pedido
+    public class Producto_Pedido
     {
         public int id_pedido {get; set;}
         public int id_producto {get; set;}
+        public int cantidad {get; set;}
     }
 }
