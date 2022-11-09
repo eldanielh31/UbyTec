@@ -95,6 +95,7 @@ import { AdminRestaurantEditComponent } from './admin-restaurant-edit/admin-rest
 import { GeneralSettingsComponent } from './general-settings/general-settings.component';
 import { EmailSettingsComponent } from './email-settings/email-settings.component';
 import { PaymentSettingsComponent } from './payment-settings/payment-settings.component';
+import { RegisterAffilComponent } from './register-affil/register-affil.component';
 
 
 //const config: SocketIoConfig = { url: 'http://localhost:4200', options: {} };
@@ -175,6 +176,7 @@ import { PaymentSettingsComponent } from './payment-settings/payment-settings.co
     GeneralSettingsComponent,
     EmailSettingsComponent,
     PaymentSettingsComponent,
+    RegisterAffilComponent,
     
   ], 
   imports: [

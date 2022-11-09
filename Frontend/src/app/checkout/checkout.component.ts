@@ -19,7 +19,7 @@ import { CustomersModelServer } from '../_models/customers';
   styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent implements OnInit {
-pageTitle = "Checkout | Maungano Food Express"
+pageTitle = "Checkout | UbyTEC"
 
   checkoutForm: FormGroup
 
