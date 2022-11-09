@@ -107,7 +107,7 @@ const routes: Routes = [
           { path: 'address-book', component: AddressBookComponent },
           { path: 'password-manager', component: ChangePasswordComponent },
         ],
-        canActivate: [AuthCustGuard],
+        //canActivate: [AuthCustGuard],
       },
       { path: 'terms', component: TermsComponent },
     ],

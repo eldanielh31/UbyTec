@@ -1,6 +1,6 @@
 <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "yellow" type = "ball-clip-rotate-multiple" [fullScreen] = "true"><p style="color: white; font-size:20px;  margin-top:50px">{{'CHECKOUT.Booking' | translate }}</p> </ngx-spinner>
 <div class="container">
-  <!--When the cart is empty-->
+  <!--When the cart is empty
   <div class="row" *ngIf="cartData.total == 0">
     <div class="col-sm-12 text-center my-5">
       <div class="">
@@ -12,10 +12,11 @@
         </button>
       </div>
     </div>
-  </div>
+  </div>-->
 
-  <div class="row mb-3 " *ngIf="cartData.total > 0">
-    <div class="col-sm-12 text-center my-5 ">
+  <!-- *ngIf="cartData.total > 0" -->
+  <div class="row mb-3 " >
+    <div class="col-sm-12 text-center my-5">
       <h1>
         {{'CHECKOUT.Heading' | translate }}
       </h1>
@@ -60,13 +61,13 @@
                 {{c.numInCart}} x {{c.product.product_name}}
               </td>
               <td>
-                {{c.product.product_price * c.numInCart | currency: 'CDF'}}
+                {{c.product.product_price * c.numInCart | currency: 'CRC'}}
               </td>
 
             </tr>
             <tr>
               <td class="total-hd">Total</td>
-              <td class="total-qty">{{cartTotal | currency: 'CDF'}}</td>
+              <td class="total-qty">{{cartTotal | currency: 'CRC'}}</td>
             </tr>
 
           </tbody>
