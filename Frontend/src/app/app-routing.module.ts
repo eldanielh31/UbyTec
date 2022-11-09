@@ -57,11 +57,13 @@ import { AdminRestaurantEditComponent } from './admin-restaurant-edit/admin-rest
 import { GeneralSettingsComponent } from './general-settings/general-settings.component';
 import { EmailSettingsComponent } from './email-settings/email-settings.component';
 import { PaymentSettingsComponent } from './payment-settings/payment-settings.component';
+import { RegisterAffilComponent } from './register-affil/register-affil.component';
 
 //Import Auth guards
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'cas', component: RegisterAffilComponent },
   { path: 'home', component: HomeComponent },
   {
     path: 'restaurants',
