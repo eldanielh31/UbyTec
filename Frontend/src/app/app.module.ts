@@ -23,8 +23,6 @@ import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
-import { CopyrightComponent } from './copyright/copyright.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { RestaurantsComponent } from './restaurants/restaurants.component';
@@ -105,8 +103,6 @@ import { PaymentSettingsComponent } from './payment-settings/payment-settings.co
   declarations: [
     AppComponent,
     HeaderComponent,
-    FooterComponent,
-    CopyrightComponent,
     NavbarComponent,
     HomeComponent,
     RestaurantsComponent,
