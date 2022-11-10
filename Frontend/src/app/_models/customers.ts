@@ -1,17 +1,13 @@
 export class CustomersModelServer {
-  id_customer: number;
-  id_customer_fk: number;
+  identification: number;
   firstName: string;
   lastName: string;
-  email: string;
+  lastName2: string;
   phone: string;
   dob: Date;
-  primaryPhone: string;
-  address: string;
-  city:string;
-  region: string;
-  additional_info:string
-  secondaryPhone:string
+  id_address: string;
+  username: string;
+  password: string;
 }
 
 export interface CustomerResponse {

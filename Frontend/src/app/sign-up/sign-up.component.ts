@@ -42,14 +42,9 @@ export class SignUpComponent implements OnInit {
     let day = this._date.getDate().toString().padStart(2, '0')
 
     this.new_date = `${year}-${month}-${day}`
-
-    console.log("Date", `${year}-${month}-${day}`)
-
+    
     let _min_year = (this._date.getFullYear() - 18)
     this.min_date = `${_min_year}-${month}-${day}`
-    console.log(`Min date ${this.min_date}`)
-
-
 
     this.registerForm = this.fb.group(
       {
@@ -106,14 +101,11 @@ export class SignUpComponent implements OnInit {
         };
         this.customerService.postCustomer(customer).subscribe(
           res => {
-            console.log(res)
+            this.submitted = false;
           }
         )
       }
     )
-    
-
-    this.submitted = false;
 
   }
 

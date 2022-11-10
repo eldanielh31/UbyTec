@@ -72,6 +72,23 @@ export class CustomerService {
       );
   }
 
+  getCustomerByUsername(username: String): Observable<CustomersModelServer> {
+    return this.http
+      .get<CustomersModelServer>(this.server_url + '/cliente/' + username)
+      .pipe(
+        catchError((error) => {
+          let errorMsg: string;
+          if (error.error instanceof ErrorEvent) {
+            errorMsg = `Error: ${error.error.message};
+      }`;
+          } else {
+            errorMsg = this.getServerErrorMessage(error);
+          }
+          return throwError(errorMsg);
+        })
+      );
+  }
+
   getCustomerById(customerId: Number): Observable<CustomersModelServer> {
     return this.http
       .get<CustomersModelServer>(this.server_url + '/customers/' + customerId)

@@ -93,12 +93,6 @@ pageTitle = "Checkout | UbyTEC"
      this.customer = data;
      this.fname = this.customer.firstName;
      this.lname = this.customer.lastName;
-     this.email = this.customer.email;
-     this.address = this.customer.address;
-     this.city = this.customer.city;
-     this.region = this.customer.region;
-     this.primaryPhone = this.customer.primaryPhone;
-     this.secondaryPhone = this.customer.secondaryPhone;
 
      this._address = `${this.address}, ${this.city}, ${this.city}`
    })

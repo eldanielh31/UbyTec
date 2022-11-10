@@ -6,6 +6,8 @@ import jwt_decode from 'jwt-decode';
 import { CustomerAuthenticationService } from '../_auth/customer-authentication.service';
 import { SharedService } from '../_services/shared_service/shared.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { CustomerService } from '../_services/customer.service';
+import { CustomersModelServer } from '../_models/customers';
 
 export interface DialogData {
   message: string;
@@ -27,31 +29,23 @@ export class LoginComponent implements OnInit {
   public loadingMsg = 'Authenticating...Please wait';
   _userData: any;
   _state: number;
-  _visible: boolean;  
+  _visible: boolean;
 
   constructor(
     private title: Title,
     private sharedService: SharedService,
-    private custAuthService: CustomerAuthenticationService,
+    private customerService: CustomerService, 
     private router: Router,
     private fb: FormBuilder,
-    //public dialogRef: MatDialogRef<LoginComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {
-    
+
   }
 
   ngOnInit(): void {
-    console.log("")
     this.title.setTitle(this.pageTitle);
 
     this.loginForm = this.fb.group({
-      email: [
-        null,
-        [
-          Validators.required,
-          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$'),
-        ],
-      ],
+      username: [null, Validators.required],
       password: [null, Validators.required],
     });
   }
@@ -73,11 +67,11 @@ export class LoginComponent implements OnInit {
 
 
   //child page toggler
-  TogglePage(pageValue: string){
-    
-    switch(pageValue) {
+  TogglePage(pageValue: string) {
+
+    switch (pageValue) {
       case 'register':
-        this._visible = true 
+        this._visible = true
         break;
       case 'login':
         this._visible = false
@@ -90,87 +84,34 @@ export class LoginComponent implements OnInit {
     this.errorMsg = '';
     this.submitted = true;
 
-    this._state = +localStorage.getItem('stateToken')
-    console.log("state value", this._state)
-
-    if (this._state){
-      if (this.loginForm.invalid) {
-        return;
-      }
-      this.loading = true;
-      this.custAuthService.login(this.loginForm.value).subscribe(
-        (data) => {
-          console.log(data);
-  
-          //get and decode token
-          let customerToken = this.custAuthService.getToken();
-          console.log('Customer token', customerToken);
-          var decoded = jwt_decode(customerToken);
-          console.log('Decoded token', decoded);
-          this.sendUserData(decoded);
-          this.successMsg = 'Successful Authentication';
-          this.loading = false;
-          localStorage.removeItem('stateToken')
-          this.router.navigateByUrl('/checkout');
-        },
-        (err) => {
-          this.errorMsg = err.error.reason;
-          this.loading = false;
-          //console.log('This is error', this.errorMsg);
-        }
-      );
-    } else{
-      if (this.loginForm.invalid) {
-        return;
-      }
-      this.loading = true;
-      this.custAuthService.login(this.loginForm.value).subscribe(
-        (data) => {
-          console.log(data);
-  
-          //get and decode token
-          let customerToken = this.custAuthService.getToken();
-          console.log('Customer token', customerToken);
-          var decoded = jwt_decode(customerToken);
-          console.log('Decoded token', decoded);
-          this.sendUserData(decoded);
-          this.successMsg = 'Successful Authentication';
-          this.loading = false;
-          this.router.navigateByUrl('/customer/profile');
-        },
-        (err) => {
-          this.errorMsg = err.error.reason;
-          this.loading = false;
-          console.log('This is error', this.errorMsg);
-        }
-      );
-    }
-/** 
     if (this.loginForm.invalid) {
       return;
     }
     this.loading = true;
-    this.custAuthService.login(this.loginForm.value).subscribe(
+    this.customerService.getCustomerByUsername(this.loginForm.value.username).subscribe(
       (data) => {
-        console.log(data);
+        let customer = data[0];
 
-        //get and decode token
-        let customerToken = this.custAuthService.getToken();
-        console.log('Customer token', customerToken);
-        var decoded = jwt_decode(customerToken);
-        console.log('Decoded token', decoded);
-        this.sendUserData(decoded);
-        this.successMsg = 'Successful Authentication';
-        this.loading = false;
-        this.router.navigateByUrl('/customer/profile');
+        if(customer && (customer['contrasena'] === this.loginForm.value.password)){
+          this.successMsg = 'Successful Authentication';
+          this.loading = false;
+          this.submitted = false;
+          localStorage.setItem('currentUser', JSON.stringify(customer));
+          this.router.navigateByUrl('/home');
+        }else{
+          this.successMsg = 'Error Authentication';
+          this.loading = false;
+          this.submitted = false;
+          this.errorMsg = 'Username or password is incorrect';
+        } 
       },
       (err) => {
         this.errorMsg = err.error.reason;
         this.loading = false;
-        console.log('This is error', this.errorMsg);
+        this.submitted = false;
       }
     );
-    */
+
   }
-  
+
 }

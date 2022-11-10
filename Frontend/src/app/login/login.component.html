@@ -36,18 +36,18 @@
         <div class="card-body">
           <form action="" [formGroup]="loginForm" (ngSubmit)="login()"> 
             <div class="form-group">
-              <label for="">{{'LOGIN.Email' | translate}}<label class="red-text">*</label></label>
+              <label for="">Username<label class="red-text">*</label></label>
               <div class="input-group mb-2">
-                <input type="email" class="form-control" id="email" name="email" formControlName="email"
-                  placeholder="{{'LOGIN.EnterEmail' | translate}}">
+                <input type="username" class="form-control" id="username" name="username" formControlName="username"
+                  placeholder="Enter your username">
                 <!--Validation-->
                 <!--<div *ngIf="submitted && f.email.errors" class="alert alert-danger">-->
               </div>
-              <div *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)" class="alert alert-danger validation">
-                <div class="alertMsg" *ngIf="f.email.errors.required">
-                  {{'LOGIN.EmailRequired' | translate}}
+              <div *ngIf="f.username.invalid && (f.username.dirty || f.username.touched)" class="alert alert-danger validation">
+                <div class="alertMsg" *ngIf="f.username.errors.required">
+                  Username is required
                 </div>
-                <div class="alertMsg" *ngIf="f.email.errors.pattern">
+                <div class="alertMsg" *ngIf="f.username.errors.pattern">
                   {{'LOGIN.InvalidEmail' | translate}}
                 </div>
               </div>

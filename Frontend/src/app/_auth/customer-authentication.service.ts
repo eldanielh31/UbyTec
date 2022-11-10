@@ -87,12 +87,8 @@ export class CustomerAuthenticationService {
 
   //Logged in
   public isLoggedIn(): boolean {
-    const customer = this.getcustomerDetails()
-    if (customer) {
-      return customer.exp > Date.now() / 1000
-    } else {
-      return false
-    }
+    const customer = localStorage.getItem('currentUser')
+    return customer? true : false;
   }
 
   private request(method: 'post' | 'get', type: 'login_customer' | 'register_customer' | 'profile', customer?: TokenPayload): Observable<any> {
