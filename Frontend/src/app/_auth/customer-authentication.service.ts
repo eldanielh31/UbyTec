@@ -5,7 +5,6 @@ import { map, retry, catchError } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 import 'rxjs/operators';
-//import 'rxjs/add/operator/toPromise';
 import { Router } from '@angular/router';
 import { CartModelPublic } from '../_models/cart';
 
@@ -39,8 +38,8 @@ export interface TokenPayload {
 })
 export class CustomerAuthenticationService {
 
-  private _registerUrl = "http://localhost:3000/api/register";
-  private _loginUrl = "http://localhost:3000/api/login";
+  private _registerUrl = "http://localhost:5000/api/register";
+  private _loginUrl = "http://localhost:5000/api/login";
 
   private token: string
 
@@ -95,16 +94,6 @@ export class CustomerAuthenticationService {
       return false
     }
   }
-
-  /**public isAdmin(): boolean {
-    const customer = this.getcustomerDetails()
-    if (customer.roles === Role.Admin) {
-      return true
-    } else {
-      // this.router.navigateByUrl('/dashboard');
-      return false
-    }
-  }*/
 
   private request(method: 'post' | 'get', type: 'login_customer' | 'register_customer' | 'profile', customer?: TokenPayload): Observable<any> {
     let base;

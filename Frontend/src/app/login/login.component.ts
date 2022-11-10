@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
   public loadingMsg = 'Authenticating...Please wait';
   _userData: any;
   _state: number;
-  _visible: boolean;
+  _visible: boolean;  
 
   constructor(
     private title: Title,
@@ -172,4 +172,5 @@ export class LoginComponent implements OnInit {
     );
     */
   }
+  
 }

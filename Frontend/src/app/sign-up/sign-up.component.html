@@ -29,16 +29,16 @@
               <div class="form-group col-sm-12 col-md-6">
                 <label for="">Last name 2<label class="red-text">*</label></label>
                 <div class="input-group mb-2">
-                  <input type="text" class="form-control" id="lname" name="lname" formControlName="lname"
-                    placeholder="Enter your last name">
+                  <input type="text" class="form-control" id="lname2" name="lname2" formControlName="lname2"
+                    placeholder="Enter your last name 2">
                 </div>
               </div>
 
-              <div class="form-group col-sm-12 col-md-12">
-                <label for="">{{'REGISTER.Email' | translate}}<label class="red-text">*</label></label>
+              <div class="form-group col-sm-12 col-md-6">
+                <label for="">Identification<label class="red-text">*</label></label>
                 <div class="input-group mb-2">
-                  <input type="email" [class.is-invalid]="f.email.invalid && f.email.touched" class="form-control"
-                    id="email" name="email" formControlName="email" placeholder="{{'REGISTER.EnterEmail' | translate}}">
+                  <input type="text" class="form-control" id="identification" name="identification" formControlName="identification"
+                    placeholder="Enter your identification">
                 </div>
               </div>
 
@@ -49,16 +49,41 @@
                     placeholder="Enter your phone number">
                 </div>
               </div>
+
               <div class="form-group col-sm-12 col-md-6">
-                <label for="">Phone#2</label>
+                <label for="">Username</label>
                 <div class="input-group mb-2">
-                  <input type="text" class="form-control" id="phone" name="phone" formControlName="phone"
-                    placeholder="Enter your phone number">
+                  <input type="text" class="form-control" id="username" name="username" formControlName="username"
+                    placeholder="Enter your phone username">
+                </div>
+              </div>
+
+              <div class="form-group col-sm-12 col-md-6">
+                <label for="">Province</label>
+                <div class="input-group mb-2">
+                  <input type="text" class="form-control" id="province" name="province" formControlName="province"
+                    placeholder="Enter your phone province">
+                </div>
+              </div>
+
+              <div class="form-group col-sm-12 col-md-6">
+                <label for="">Canton</label>
+                <div class="input-group mb-2">
+                  <input type="text" class="form-control" id="canton" name="canton" formControlName="canton"
+                    placeholder="Enter your phone canton">
+                </div>
+              </div>
+
+              <div class="form-group col-sm-12 col-md-6">
+                <label for="">District</label>
+                <div class="input-group mb-2">
+                  <input type="text" class="form-control" id="district" name="district" formControlName="district"
+                    placeholder="Enter your phone district">
                 </div>
               </div>
 
               <div class="form-group col-sm-12 col-md-7">
-                <label for="">{{'REGISTER.Dob' | translate}} </label>
+                <label for="">Date of birth</label>
                 <div class="input-group mb-2">
                   <div class="datepicker date input-group p-0 shadow-sm">
                     <input type="date" name="dob" formControlName="dob" id="dob" max={{min_date}} min="1900-01-28"
@@ -68,30 +93,30 @@
               </div>
 
               <div class="form-group col-sm-12 col-md-6">
-                <label for="">{{'REGISTER.Password' | translate}}<label class="red-text">*</label></label>
+                <label for="">Password<label class="red-text">*</label></label>
                 <div class="input-group mb-2">
 
                   <input [type]="fieldTextType ? 'text' : 'password'" class="form-control" id="password" name="password"
-                    formControlName="password" placeholder="{{'REGISTER.EnterPassword' | translate}}">
+                    formControlName="password" placeholder="Enter your password">
                 </div>
               </div>
 
               <div class="form-group col-sm-12 col-md-6">
-                <label for="">{{'REGISTER.CPassword' | translate}}<label class="red-text">*</label></label>
+                <label for="">Confirmation password<label class="red-text">*</label></label>
                 <div class="input-group mb-2">
 
                   <input [type]="fieldTextType ? 'text' : 'password'" class="form-control" id="confirmPassword"
                     name="confirmPassword" formControlName="confirmPassword"
-                    placeholder="{{'REGISTER.EnterCPassword' | translate}}">
+                    placeholder="Enter your confirm password">
                 </div>
               </div>
 
               <div class="col-sm-12 d-flex">
                 <button *ngIf="!submitted" class="btn btn-outline-danger btn-block" type="submit">
-                  {{'REGISTER.Submit' | translate}}</button>
+                  Submit</button>
                 <button *ngIf="submitted" class="btn btn-outline-danger btn-block" [disabled]="submitted"
                   [class.disabled]="submitted">
-                  {{'REGISTER.Submitted' | translate}}</button>
+                  Submitted</button>
               </div>
             </div>
           </form>
