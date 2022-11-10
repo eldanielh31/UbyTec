@@ -25,6 +25,35 @@ namespace WebApplication1.Controllers
             _env = env;
         }
 
+
+        [HttpGet("{username}")]
+        public JsonResult GetByUsername(string username)
+        {
+            string query = @"
+                select * from cliente
+                where usuario=@username
+            ";
+
+            DataTable table = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("UbyAppCon");
+            NpgsqlDataReader myReader;
+            using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
+                {
+                    myCommand.Parameters.AddWithValue("@username", username);
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader);
+
+                    myReader.Close();
+                    myCon.Close();
+                }
+            }
+
+            return new JsonResult(table);
+        }
+
         [HttpGet]
         public JsonResult Get()
         {
@@ -145,7 +174,7 @@ namespace WebApplication1.Controllers
             return new JsonResult("Updated Successfully");
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{cedula}")]
         public JsonResult Delete(int cedula)
         {
             string query = @"
