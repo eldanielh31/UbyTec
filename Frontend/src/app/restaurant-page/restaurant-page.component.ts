@@ -37,7 +37,7 @@ export class RestaurantPageComponent implements OnInit {
     this.restaurantService.getAllSuppliers().subscribe(
       (sups) => {
         console.log('Restaurants', sups);
-        this.restaurants = sups.suppliers.filter(x=>{ return x.status == 1})
+        localStorage.setItem('restaurants', JSON.stringify(sups))
         this.spinner.hide()
       },
       (err) =>{
@@ -46,6 +46,7 @@ export class RestaurantPageComponent implements OnInit {
       }
     );
 
+    this.restaurants = JSON.parse(localStorage.getItem('restaurants'))
     
   }
 

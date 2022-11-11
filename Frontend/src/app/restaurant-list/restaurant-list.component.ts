@@ -17,14 +17,7 @@ export class RestaurantListComponent implements OnInit {
   ngOnInit(): void {
 
     //fetch restaurants
-    this.restaurantService.getAllSuppliers()
-    .subscribe(sups=>{
-       
-       console.log("Restaurants", sups)
-       this.restaurants = sups.suppliers
-      
-    },
-    err => this.errorMsg = err)
+    this.restaurants = JSON.parse(localStorage.getItem('restaurants'))
   }
 
 }

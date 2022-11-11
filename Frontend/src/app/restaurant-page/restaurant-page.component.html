@@ -2,18 +2,17 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <input type="text"  id="" placeholder="Recherchez votre restaurant préféré..." [(ngModel)]="searchText" name="searchText">
+            <input type="text"  id="" placeholder="Find your favorite restaurant..." [(ngModel)]="searchText" name="searchText">
         </div>
     </div>
     <div class="row py-3">
-      <div class="col-sm-12 col-md-6 col-lg-3 restaurant" *ngFor="let _restaurant of restaurants | searchBy:{supplier_name:
+      <div class="col-sm-12 col-md-6 col-lg-3 restaurant" *ngFor="let _restaurant of restaurants | searchBy:{nombre:
         searchText} ">
-          <img src="../../assets/img/restaurants/{{_restaurant.supplier_image}}" alt="restaurant">
-          <h3>{{_restaurant.supplier_name}}</h3>
-          <p>{{_restaurant.supplier_description.substr(0,50)}} ...</p>
-          <p class="time"><span>{{'RESTAURANT.Open' | translate}}: {{_restaurant.openTime}}</span> - <span>{{'RESTAURANT.Close' | translate}}: {{_restaurant.closeTime}}</span> </p>
-          
-          <button class="btn" routerLink="/restaurants/{{_restaurant.id_supplier}}" (onClick)="navigate(restaurants)" >{{'RESTAURANT.ViewButton' | translate}}</button>
+          <img src="../../assets/img/restaurants/restaurant2.jpg" alt="restaurant">
+          <h3>{{_restaurant.nombre}}</h3>
+          <p>{{_restaurant.provincia}} ... {{_restaurant.canton}} ... {{_restaurant.distrito}}</p>
+
+          <button class="btn" routerLink="/restaurants/{{_restaurant.cedula}}" (onClick)="navigate(restaurants)" >{{'RESTAURANT.ViewButton' | translate}}</button>
 
         </div>
   </div>
