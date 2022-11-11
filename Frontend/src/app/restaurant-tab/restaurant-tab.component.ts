@@ -34,22 +34,22 @@ export class RestaurantTabComponent implements OnInit {
     //fetch restaurants
     this.restaurantService.getAllSuppliers()
     .subscribe(sups=>{
-       
-       console.log("Restaurants", sups)
-       this.restaurants = sups.suppliers.filter(x=>{ return x.status == 1})
+      localStorage.setItem('restaurants', JSON.stringify(sups))
        this.contentLoadedSups = true
-      
     },
     err => this.errorMsg = err)
 
     //fetch products
     this.productService.getProducts()
     .subscribe(prods => {
-      this.products = prods.products
+      localStorage.setItem('products', JSON.stringify(prods))
       this.contentLoadedProds = true
     },
     err => {this.errorMsg = err;
     console.log(this.errorMsg)})
+
+    this.restaurants = JSON.parse(localStorage.getItem('restaurants'))
+    this.products = JSON.parse(localStorage.getItem('products'))
     
   }
 

@@ -22,7 +22,7 @@ export class ProductsService {
   // retrieving products
   getProducts(numberofResults: number = 10): Observable<any> {
     return this.http
-      .get(this.server_url + '/products', {
+      .get(this.server_url + '/producto', {
         params: {
           limit: numberofResults.toString(),
         },
@@ -43,7 +43,7 @@ export class ProductsService {
 
   getSingleProduct(productId: Number): Observable<ProductModelServer> {
     return this.http
-      .get<ProductModelServer>(this.server_url + '/products/' + productId)
+      .get<ProductModelServer>(this.server_url + '/producto/' + productId)
       .pipe(
         catchError((error) => {
           let errorMsg: string;

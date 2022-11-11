@@ -28,14 +28,13 @@
             </div>
 
              <!--Ngx-skeleton END-->
-
             <div class="w-100 d-flex" *ngIf="contentLoadedSups">
               <div class="col-sm-12 col-md-6 col-lg-3 restaurant" *ngFor="let _restaurant of restaurants" >
                 <div class="col-sm-12 badge"><span class="badge badge-danger">{{'RESTAURANT.NewBadge' | translate}}</span></div>
-                <img src="../../assets/img/restaurants/{{_restaurant.supplier_image}}" alt="">
-                <h3>{{_restaurant.supplier_name}}</h3>
-                <p>{{_restaurant.supplier_description.substr(0,80)}} ...</p>
-                <a class="btn" routerLink="/restaurants/{{_restaurant.id_supplier}}" >{{'RESTAURANT.ViewButton' | translate}}</a>
+                <img src="../../assets/img/restaurants/restaurant1.jpg" alt="">
+                <h3>{{_restaurant.nombre}}</h3>
+                <p>{{_restaurant.sinpe}}...{{_restaurant.email}}</p>
+                <a class="btn" routerLink="/restaurants/{{_restaurant.cedula}}" >{{'RESTAURANT.ViewButton' | translate}}</a>
               </div>
             </div>
            
@@ -65,16 +64,13 @@
             <div class="w-100 d-flex flex-lg-row flex-sm-column justify-content-between" *ngIf="contentLoadedProds">
               <div class="col-sm-12 col-md-12 col-lg-3  restaurant" *ngFor="let _menu of products">
                 <!--<div class="badge"><span class="badge badge-danger">New</span></div>-->
-                <a routerLink="/products/{{_menu.id_product}}"><img src="../../assets/img/menu/{{_menu.image}}" alt="">
-                <h3>{{_menu.product_name}}</h3></a>
-                <p><strong>{{'FEATUREDMENU.Category' | translate}}:</strong> {{_menu.category}} </p>
-                <p class="ingredients">{{_menu.product_description.substr(0,80)}} ...</p>
-                <p class="currency"> {{_menu.product_price | currency: 'CDF'}}</p>
+                <a routerLink="/products/{{_menu.id}}"><img src="../../assets/img/menu/burger3.png" alt="">
+                <h3>{{_menu.nombre}}</h3></a>
+                <!-- <p><strong>{{'FEATUREDMENU.Category' | translate}}:</strong> {{_menu.category}} </p> -->
+                <p class="ingredients">{{_menu.foto}} ...</p>
+                <p class="currency"> {{_menu.precio | currency: '₡'}}</p>
                 <button class="btn"
-                [disabled] ="_menu.quality < 1"
-                [class.disabled]="_menu.quantity < 1"
-                [class.btn-warning]="_menu.quantity < 1"
-                (click)="addToCart(_menu.id_product)">{{_menu.quantity < 1 ? "Pas de stock" : "Ajouter à la carte"}}</button>
+                (click)="addToCart(_menu.id)">Order</button>
                 <!--<button >Out of Stock</button>-->
               </div>
             </div>

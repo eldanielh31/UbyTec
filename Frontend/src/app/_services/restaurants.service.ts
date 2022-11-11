@@ -20,7 +20,7 @@ export class RestaurantsService {
 
   // retrieving restaurant
   getAllSuppliers(numberofResults: number = 10):Observable<any> {
-    return this.http.get(this.server_url +'/suppliers', {
+    return this.http.get(this.server_url +'/comercioaceptado', {
       params:{
         limit: numberofResults.toString()
       }

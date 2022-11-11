@@ -10,8 +10,8 @@ import jwt_decode from 'jwt-decode';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  
-  pageTitle = 'Maungano Food Express';
+
+  pageTitle = 'UbyTEC';
 
   sideBarOpen = true
 
@@ -19,27 +19,18 @@ export class AppComponent {
   fname: any;
   lname: any;
 
-  constructor(private router:Router, public auth: AuthenticationService, private title: Title) { }
+  constructor(private router: Router, public auth: AuthenticationService, private title: Title) { }
 
   ngOnInit() {
- this.title.setTitle(this.pageTitle)
+    this.title.setTitle(this.pageTitle)
 
-    //fetch user token and decode
-    let Token = this.auth.getToken();
-    //console.log('User token', Token);
-    var decoded = jwt_decode(Token);
-    console.log("Decoded", decoded)
-    this.fname = decoded.fname
-    this.lname = decoded.lname
+    let customerData = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')) : null
 
-    
+    this.fname = customerData ? customerData.nombre : null
+    this.lname = customerData ? customerData.apellido1 : null
+  }
 
-   
-   
-   }
-
-
-  hasRoute(route: string){
+  hasRoute(route: string) {
     return this.router.url.includes(route)
   }
 }

@@ -21,9 +21,9 @@ export class TopnavComponent implements OnInit {
   cart: any;
   _message: string
 
-  store: any = [];
-  email: any
-  phone: any
+  // store: any = [];
+  // email: any
+  // phone: any
 
   //Data variable to store the cart information on the client's local storage
   private cartDataClient: CartModelPublic = {
@@ -55,14 +55,12 @@ export class TopnavComponent implements OnInit {
 
     this.fname = this.customerData? this.customerData.nombre : null
 
-    console.log(this.customerData)
-
     //fetch store information
-    this.generalService.getStoreInfo()
-      .subscribe(data => {
-        this.store = data
-        this.phone = this.store.map(x => x.phone).toString()
-      })
+    // this.generalService.getStoreInfo()
+    //   .subscribe(data => {
+    //     this.store = data
+    //     this.phone = this.store.map(x => x.phone).toString()
+    //   })
 
 
     //fetch currencies
