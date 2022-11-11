@@ -11,12 +11,12 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    [Route("api/comercioaceptado")]
+    [Route("api/restaurantedireccion")]
     [ApiController]
-    public class ComercioAceptadoController : ControllerBase
+    public class RestauranteDireccionController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        public ComercioAceptadoController(IConfiguration configuration)
+        public RestauranteDireccionController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -25,8 +25,8 @@ namespace WebApplication1.Controllers
         public JsonResult Get()
         {
             string query = @"
-                SELECT *
-	            FROM public.comerciosaceptados;
+                select cedula, nombre, sinpe, email, provincia, canton, distrito 
+	            FROM public.restaurantedireccion;
             ";
 
             DataTable table = new DataTable();

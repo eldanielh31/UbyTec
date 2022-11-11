@@ -46,6 +46,35 @@ namespace WebApplication1.Controllers
             return new JsonResult(table);
         }
 
+
+        [HttpGet("{id}")]
+        public JsonResult GetbyId(int id)
+        {
+            string query = @"
+                select * 
+                from producto
+                where id = @id
+            ";
+
+            DataTable table = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("UbyAppCon");
+            NpgsqlDataReader myReader;
+            using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
+                {
+                    myCommand.Parameters.AddWithValue("@id", id);
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader);
+                    myReader.Close();
+                    myCon.Close();
+                }
+            }
+
+            return new JsonResult(table);
+        }
+
         [HttpPost]
         public JsonResult Post(Producto emp)
         {
