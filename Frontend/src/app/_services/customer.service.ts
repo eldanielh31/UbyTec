@@ -91,7 +91,7 @@ export class CustomerService {
 
   getCustomerById(customerId: Number): Observable<CustomersModelServer> {
     return this.http
-      .get<CustomersModelServer>(this.server_url + '/customers/' + customerId)
+      .get<CustomersModelServer>(this.server_url + '/cliente/cedula/' + customerId)
       .pipe(
         catchError((error) => {
           let errorMsg: string;
@@ -127,8 +127,7 @@ export class CustomerService {
 
   //update customer information
   updateCustomer(customerInfo: any): Observable<any> {
-    var headers = new HttpHeaders();
-    return this.http.post(this.server_url + '/customer', customerInfo, { headers: headers })
+    return this.http.put(this.server_url + '/cliente', customerInfo)
       .pipe(catchError(error => {
         let errorMsg: string;
         if (error.error instanceof ErrorEvent) {

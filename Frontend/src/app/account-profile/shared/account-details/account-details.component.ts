@@ -19,13 +19,12 @@ export class AccountDetailsComponent implements OnInit {
   customerProfile: any;
   fname: any;
   lname: any;
-  email: any;
-  address: any;
-  city: any;
-  region: any;
+  lname2: any;
+  username: any;
   primaryPhone: any;
-  secondaryPhone: any;
-  additional_info: any;
+  cedula: any;
+  password: any;
+  id_direction: any;
 
   updating: boolean = false
   errorMsg: any;
@@ -34,10 +33,9 @@ export class AccountDetailsComponent implements OnInit {
   constructor(
     private title: Title,
     private customerService: CustomerService,
-    public custAuthService: CustomerAuthenticationService,
     private fb: FormBuilder,
     private toast: ToastrService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.title.setTitle(this.pageTitle);
@@ -45,40 +43,41 @@ export class AccountDetailsComponent implements OnInit {
     this.customerProfileForm = this.fb.group({
       fname: [null],
       lname: [null],
-      email: [null],
+      lname2: [null],
+      username: [null],
       primaryPhone: [null],
-      secondaryPhone: [null],
       dob: [null],
-      address: [null],
-      city: [null],
-      region: [null],
-      additional_info: [null]
+      password: [null],
+
+      province: [null],
+      canton: [null],
+      district: [null],
     });
 
-    //fetch user token and decode
-    let customerToken = this.custAuthService.getToken();
-    var decoded = jwt_decode(customerToken);
-    
 
     //fetch all customer details
-    this.customerService
-      .getCustomerById(decoded.id_customer)
-      .subscribe((data) => {
-        console.log('customer details', data);
-        this.customerProfile = data;
-        this.fname = this.customerProfile.firstName;
-        this.lname = this.customerProfile.lastName;
-        this.email = this.customerProfile.email;
-        this.address = this.customerProfile.address;
-        this.city = this.customerProfile.city;
-        this.region = this.customerProfile.region;
-        this.primaryPhone = this.customerProfile.primaryPhone;
-        this.secondaryPhone = this.customerProfile.secondaryPhone;
-        this.additional_info = this.customerProfile.additional_info;
-      this.dob = this.customerProfile.dob
+    this.customerProfile = JSON.parse(localStorage.getItem('currentUser'));
+    this.cedula = this.customerProfile.cedula;
 
-      //format date before patching it to date  input element
-      const date_of_birth = function formatDate(_date) {
+    this.customerService.getCustomerById(this.cedula).subscribe(
+      data=>{
+        let currentUser = data[0]
+        localStorage.setItem('currentUser', JSON.stringify(currentUser))
+      }
+    )
+    this.customerProfile = JSON.parse(localStorage.getItem('currentUser'));
+
+    this.fname = this.customerProfile.nombre;
+    this.lname = this.customerProfile.apellido1;
+    this.lname2 = this.customerProfile.apellido2;
+    this.username = this.customerProfile.usuario;
+    this.primaryPhone = this.customerProfile.telefono;
+    this.dob = this.customerProfile.fecha_nac;
+    this.password = this.customerProfile.contrasena;
+    this.id_direction = this.customerProfile.id_direccion;
+
+    //format date before patching it to date  input element
+    const date_of_birth = function formatDate(_date) {
       const d = new Date(_date);
       let month = '' + (d.getMonth() + 1);
       let day = '' + d.getDate();
@@ -88,72 +87,56 @@ export class AccountDetailsComponent implements OnInit {
       return [year, month, day].join('-');
     }
 
-    console.log("Date of birth", date_of_birth(this.dob) )
-        
-
-        this.customerProfileForm.patchValue({
-          fname: this.fname,
-          lname: this.lname,
-          email: this.email,
-          primaryPhone: this.primaryPhone,
-          secondaryPhone: this.secondaryPhone,
-          address: this.address,
-          city: this.city,
-          region: this.region,
-          additional_info: this.additional_info,
-          dob: date_of_birth(this.dob)
-        });
-      });
+    this.customerProfileForm.patchValue({
+      fname: this.fname,
+      lname: this.lname,
+      lname2: this.lname2,
+      username: this.username,
+      password: this.password,
+      primaryPhone: this.primaryPhone,
+      dob: date_of_birth(this.dob)
+    });
   }
 
   submit() {
     this.updating = true
-    let customerToken = this.custAuthService.getToken();
-    var decoded = jwt_decode(customerToken);
-
     var fname = this.customerProfileForm.value.fname
     var lname = this.customerProfileForm.value.lname
-    var email = this.customerProfileForm.value.email
+    var lname2 = this.customerProfileForm.value.lname2
+    var username = this.customerProfileForm.value.username
+    var password = this.customerProfileForm.value.password
     var primaryPhone = this.customerProfileForm.value.primaryPhone
-    var secondaryPhone = this.customerProfileForm.value.secondaryPhone
-    var address = this.customerProfileForm.value.address
-    var city = this.customerProfileForm.value.city
-    var region = this.customerProfileForm.value.region
-    var additional_info = this.customerProfileForm.value.additional_info
     var dob = this.customerProfileForm.value.dob
 
     const customer = {
-      id_customer:decoded.id_customer,
-      fname: fname,
-      lname:lname,
-      email:email,
-      primaryPhone:primaryPhone,
-      secondaryPhone:secondaryPhone,
-      address:address,
-      city:city,
-      region:region,
-      additional_info:additional_info,
-      dob: dob
+      cedula: this.cedula,
+      nombre: fname,
+      apellido1: lname,
+      apellido2: lname2,
+      usuario: username,
+      contrasena: password,
+      telefono: primaryPhone,
+      fecha_nac: dob,
+      id_direccion: this.id_direction
     }
 
-    
     this.customerService.updateCustomer(customer)
-    .subscribe(data =>{
-      this.toast.success(
-        `Customer information details updated`,
-        'Information updated',
-        {
-          timeOut: 3600,
-          progressBar: true,
-          progressAnimation: 'increasing',
-          positionClass: 'toast-top-right',
-        }
-      );
-      this.updating = false
-      this.ngOnInit()
-    },err =>{
-      this.errorMsg = err
-    })
+      .subscribe(data => {
+        this.toast.success(
+          `Customer information details updated`,
+          'Information updated',
+          {
+            timeOut: 3600,
+            progressBar: true,
+            progressAnimation: 'increasing',
+            positionClass: 'toast-top-right',
+          }
+        );
+        this.updating = false
+        this.ngOnInit()
+      }, err => {
+        this.errorMsg = err
+      })
 
   }
 }

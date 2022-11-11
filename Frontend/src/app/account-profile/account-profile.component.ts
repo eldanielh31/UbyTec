@@ -13,20 +13,15 @@ import { OrderService } from '../_services/order.service';
   styleUrls: ['./account-profile.component.css'],
 })
 export class AccountProfileComponent implements OnInit {
- 
-  
-  
 
   userData: any;
   customerProfile: any;
   fname: any;
   lname: any;
-  email: any;
-  address: any;
-  city: any;
-  region: any;
-  primaryPhone: any;
-  secondaryPhone: any;
+  lname2: any;
+  username: any;
+  password: any;
+  phone: any;
 
   add_new: boolean = false;
   orders: any;
@@ -39,42 +34,15 @@ export class AccountProfileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    
-
-   
-
-   
-
-    //fetch user token and decode
-    let customerToken = this.custAuthService.getToken();
-    console.log('Customer token', customerToken);
-    var decoded = jwt_decode(customerToken);
-    console.log('Decoded token', decoded.id_customer);
 
     //fetch all customer details
-    this.customerService
-      .getCustomerById(decoded.id_customer)
-      .subscribe((data) => {
-        console.log('customer details', data);
-        this.customerProfile = data;
-        this.fname = this.customerProfile.firstName;
-        this.lname = this.customerProfile.lastName;
-        this.email = this.customerProfile.email;
-        this.address = this.customerProfile.address;
-        this.city = this.customerProfile.city;
-        this.region = this.customerProfile.region;
-        this.primaryPhone = this.customerProfile.primaryPhone;
-        this.secondaryPhone = this.customerProfile.secondaryPhone;
-
-       
-
-        //fetch orders by customer id
-        this.orderService.getLatestOrderById(decoded.id_customer)
-        .subscribe(data =>{
-          this.orders = data
-          console.log("These latest orders", this.orders)
-        })
-      });
+    this.customerProfile = JSON.parse(localStorage.getItem('currentUser'));
+    this.fname = this.customerProfile.nombre;
+    this.lname = this.customerProfile.apellido1;
+    this.lname2 = this.customerProfile.apellido1;
+    this.username = this.customerProfile.usuario;
+    this.password = this.customerProfile.contrasena;
+    this.phone = this.customerProfile.telefono;
   }
 
   submit(btn_value: string) {
