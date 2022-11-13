@@ -29,8 +29,8 @@ export class FoodPageComponent implements OnInit {
     //fetch products
     this.productService.getProductsByRestaurant(this.restaurantId)
         .subscribe(data=>{
-          this.menu = data.products
-          if(data.count >= 1){
+          this.menu = data
+          if (data.length >= 1){
             return true
           } else{
             this.errorMsg = true
@@ -51,7 +51,6 @@ export class FoodPageComponent implements OnInit {
     this.currency  = JSON.parse(this.currencyService.getActiveCurrency())
     this.iso_code = this.currency.map(x=>x.iso_code).toString()
     this.conversion_rate = +this.currency.map(x=>x.conversion_rate)
-    //console.log("This typeof",  JSON.parse(this.currency))
    
     if (this.conversion_rate){
      return value * this.conversion_rate

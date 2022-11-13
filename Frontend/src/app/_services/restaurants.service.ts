@@ -39,7 +39,7 @@ export class RestaurantsService {
   //retrieving restaurant by ID
   getSingleRestaurant(productId: Number): Observable<SupplierModelServer> {
     return this.http
-      .get<SupplierModelServer>(this.server_url + '/suppliers/' + productId)
+      .get<SupplierModelServer>(this.server_url + '/comercioaceptado/' + productId)
       .pipe(catchError(error =>{
         let errorMsg: string;
         if (error.error instanceof ErrorEvent) {

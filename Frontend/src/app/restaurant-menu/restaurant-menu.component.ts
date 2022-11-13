@@ -37,12 +37,10 @@ export class RestaurantMenuComponent implements OnInit {
       })
     ).subscribe(prodId => {
       this.id = prodId;
-      //console.log("This restaurant", this.id)
       this.restaurantService.getSingleRestaurant(this.id)
       .subscribe(data=>{
-        console.log("this restaurant", data)
-        this.supplier = data
-        this.title.setTitle(`${this.supplier.supplier_name} Menu | Maungano Food Express`)
+        this.supplier = data[0]
+        this.title.setTitle(`${this.supplier.nombre} Menu | UbyTEC`)
         this.spinner.hide()
         
       })

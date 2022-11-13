@@ -61,7 +61,7 @@ export class ProductsService {
   //Fetch products by restaurant
   getProductsByRestaurant(restaurantId: Number): Observable<any> {
     return this.http
-      .get(this.server_url + '/productsByRest/' + restaurantId)
+      .get(this.server_url + '/producto/cedula_comercio/' + restaurantId)
       .pipe(
         catchError((error) => {
           let errorMsg: string;
