@@ -25,9 +25,10 @@
             <!--<div class="badge"><span class="badge badge-danger">New</span></div>-->
             <img src="../../assets/img/menu/chicken2.jpg" alt="">
             <h3><a routerLink="/../products/{{_menu.id}}">{{_menu.nombre}}</a></h3>
-            <p class="ingredients">{{_menu.precio}} ...</p>
-            <p class="currency"> {{getIsoCode()}} {{_menu.product_price}}</p>
-            <button class="btn">Add to cart</button>
+            <p class="currency">₡{{_menu.precio}}</p>
+            <button class="btn"
+             (click)="addToCart(_menu.id)"
+            >Add to cart</button>
             <!--<button >Out of Stock</button>-->
           </div>
     </div>

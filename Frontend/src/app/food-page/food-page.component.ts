@@ -46,23 +46,4 @@ export class FoodPageComponent implements OnInit {
     this.cartService.AddProductToCart(id)
   }
 
-  //currency converter
-  convertWithCurrencyRate(value: number){
-    this.currency  = JSON.parse(this.currencyService.getActiveCurrency())
-    this.iso_code = this.currency.map(x=>x.iso_code).toString()
-    this.conversion_rate = +this.currency.map(x=>x.conversion_rate)
-   
-    if (this.conversion_rate){
-     return value * this.conversion_rate
-    } 
-    return value
- }
-
- //fetch iso code
- getIsoCode(){
-  this.currency  = JSON.parse(this.currencyService.getActiveCurrency())
-  this.iso_code = this.currency.map(x=>x.iso_code).toString()
-  return this.iso_code
- }
-
 }

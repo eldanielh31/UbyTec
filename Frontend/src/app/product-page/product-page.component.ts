@@ -39,11 +39,9 @@ export class ProductPageComponent implements AfterViewInit, OnInit {
       this.id = prodId;
       //console.log("this id is", this.id)
       this.productService.getSingleProduct(this.id).subscribe(prod => {
+        prod = prod[0];
         this.product = prod;
-        //console.log("this product", this.product)
-        if (prod.images !== null) {
-          this.thumbimages = prod.images.split(';');
-        }
+        this.thumbimages = [prod.foto]
 
       });
     });
@@ -53,41 +51,41 @@ export class ProductPageComponent implements AfterViewInit, OnInit {
   ngAfterViewInit(): void {
 
     // Product Main img Slick
-    $('#product-main-img').slick({
-      infinite: true,
-      speed: 300,
-      dots: false,
-      arrows: true,
-      fade: true,
-      asNavFor: '#product-imgs',
-    });
+    // $('#product-main-img').slick({
+    //   infinite: true,
+    //   speed: 300,
+    //   dots: false,
+    //   arrows: true,
+    //   fade: true,
+    //   asNavFor: '#product-imgs',
+    // });
 
-    // Product imgs Slick
-    $('#product-imgs').slick({
-      slidesToShow: 3,
-      slidesToScroll: 1,
-      arrows: true,
-      centerMode: true,
-      focusOnSelect: true,
-      centerPadding: 0,
-      vertical: true,
-      asNavFor: '#product-main-img',
-      responsive: [{
-        breakpoint: 991,
-        settings: {
-          vertical: false,
-          arrows: false,
-          dots: true,
-        }
-      },
-      ]
-    });
+    // // Product imgs Slick
+    // $('#product-imgs').slick({
+    //   slidesToShow: 3,
+    //   slidesToScroll: 1,
+    //   arrows: true,
+    //   centerMode: true,
+    //   focusOnSelect: true,
+    //   centerPadding: 0,
+    //   vertical: true,
+    //   asNavFor: '#product-main-img',
+    //   responsive: [{
+    //     breakpoint: 991,
+    //     settings: {
+    //       vertical: false,
+    //       arrows: false,
+    //       dots: true,
+    //     }
+    //   },
+    //   ]
+    // });
 
     // Product img zoom
-    var zoomMainProduct = document.getElementById('product-main-img');
-    if (zoomMainProduct) {
-      $('#product-main-img .product-preview').zoom();
-    }
+    // var zoomMainProduct = document.getElementById('product-main-img');
+    // if (zoomMainProduct) {
+    //   $('#product-main-img .product-preview').zoom();
+    // }
   }
 
   addToCart(id: Number) {

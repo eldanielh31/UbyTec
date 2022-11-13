@@ -12,6 +12,9 @@ export class ProductModelServer {
     quantity:number;
     createdAt:Date;
     updatedAt: Date;
+  id: number;
+  nombre: string;
+  foto: any;
 }
 
 export interface ServerResponse{
