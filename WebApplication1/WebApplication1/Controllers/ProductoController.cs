@@ -21,6 +21,35 @@ namespace WebApplication1.Controllers
             _configuration = configuration;
         }
 
+        [HttpGet("cedula_comercio/{cedula_comercio}")]
+        public JsonResult GetbyCedulaComercio(int cedula_comercio)
+        {
+            string query = @"
+                select * 
+                from producto
+                where cedula_comercio = @cedula_comercio
+            ";
+
+            DataTable table = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("UbyAppCon");
+            NpgsqlDataReader myReader;
+            using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
+                {
+                    myCommand.Parameters.AddWithValue("@cedula_comercio", cedula_comercio);
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader);
+                    myReader.Close();
+                    myCon.Close();
+                }
+            }
+
+            return new JsonResult(table);
+        }
+
+
         [HttpGet]
         public JsonResult Get()
         {
@@ -45,7 +74,6 @@ namespace WebApplication1.Controllers
 
             return new JsonResult(table);
         }
-
 
         [HttpGet("{id}")]
         public JsonResult GetbyId(int id)
