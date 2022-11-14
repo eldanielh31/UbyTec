@@ -50,16 +50,17 @@ namespace WebApplication1.Controllers
         public JsonResult Post(Pedido emp)
         {
             string query = @"
-                insert into pedido (id, id_direccion, cedula_cliente, id_repartidor, direc_exacta, comprobante) 
+                insert into pedido (id, id_direccion, cedula_cliente, id_repartidor, direc_exacta, comprobante, entregado) 
                 values(
                 DEFAULT,
                 @id_direccion,
                 @cedula_cliente,
                 @id_repartidor,
                 @direc_exacta,
-                @comprobante
+                @comprobante,
+                @entregado
                 )
-                returning id_pedido
+                returning id
             ";
 
             DataTable table = new DataTable();
@@ -76,6 +77,7 @@ namespace WebApplication1.Controllers
                     myCommand.Parameters.AddWithValue("@id_repartidor", emp.id_repartidor);
                     myCommand.Parameters.AddWithValue("@direc_exacta", emp.direc_exacta);
                     myCommand.Parameters.AddWithValue("@comprobante", emp.comprobante);
+                    myCommand.Parameters.AddWithValue("@entregado", emp.entregado);
                     newpedidoID = myCommand.ExecuteScalar();
 
                     myCon.Close();

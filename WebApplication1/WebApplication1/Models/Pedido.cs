@@ -7,6 +7,7 @@ namespace WebApplication1.Models
 {
     public class Pedido
     {
+        public bool entregado;
         public int id {get; set;}
         public int id_direccion {get; set;}
         public int cedula_cliente {get; set;}
