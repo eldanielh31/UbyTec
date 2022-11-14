@@ -22,7 +22,7 @@ export class OrderService {
 
   //get orders distinct reference id
   getAllDistinctOrders(): Observable<any> {
-    return this.http.get(this.server_url + '/orders_distinct').pipe(
+    return this.http.get(this.server_url + '/pedido').pipe(
       catchError((error) => {
         let errorMsg: string;
         if (error.error instanceof ErrorEvent) {
@@ -152,6 +152,25 @@ export class OrderService {
     headers.append('Content-Type', 'application/json');
     return this.http
       .post(this.server_url + '/cancel', updateInfo, { headers: headers })
+      .pipe(
+        catchError((error) => {
+          let errorMsg: string;
+          if (error.error instanceof ErrorEvent) {
+            errorMsg = `Error: ${error.error.message};
+      }`;
+          } else {
+            errorMsg = this.getServerErrorMessage(error);
+          }
+          return throwError(errorMsg);
+        })
+      );
+  }
+
+  deleteOrder(id: any): Observable<any> {
+    var headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    return this.http
+      .delete(this.server_url + '/pedido/' + id)
       .pipe(
         catchError((error) => {
           let errorMsg: string;

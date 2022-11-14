@@ -35,10 +35,10 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Reference</th>
-            <th>Total price</th>
-            <th>Payment mode</th>
-            <th>Customer</th>
+            <th>Voucher</th>
+            <th>Client Identification</th>
+            <th>ID Repartidor</th>
+            <th>Direction</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
@@ -51,23 +51,20 @@
           </tr>
          
           <tr *ngFor="let order of ordersOpen|  searchBy:{order_reference:
-            searchText}  | searchBy:{order_state:
+            searchText}  | searchBy:{entregado:
               searchState}   | paginate: { itemsPerPage: 10, currentPage: p,totalItems: count, autoHide: true }; let i=index">
-            <td>{{i+1}}</td>
-            <td>{{order.order_reference}}</td>
-            <td>{{order.total | currency:'CDF':'code'}}</td>
-            <td>{{order.payment_name}}</td>
-            <td><span class="text-capitalize">{{order.fname}}</span> {{order.lname}}</td>
+            <td>{{order.id}}</td>
+            <td>{{order.comprobante}}</td>
+            <td>{{order.cedula_cliente}}</td>
+            <td>{{order.id_repartidor}}</td>
+            <td>{{order.direc_exacta}}</td>
             <td >
-              <span class="alert alert-pending" *ngIf="order.order_state < 1" >New order</span>
-              <span class="alert alert-processing" *ngIf="order.order_state == 1" >Processing</span>
-              <span class="alert alert-info" *ngIf="order.order_state == 2" >Dispatched</span>
-              <span class="alert alert-success" *ngIf="order.order_state == 3">Fulfilled</span>
-              <span class="alert alert-danger" *ngIf="order.order_state == 4">Cancelled</span>
+              <span class="alert alert-pending" *ngIf="order.entregado === false" >Pending</span>  
+              <span class="alert alert-success" *ngIf="order.entregado === true">Success</span>
             </td>
             <td>
-              <span><a class="dropdown-item" data-toggle="tooltip" data-placement="top" title="View order" routerLink="../orders/order-details/{{order.id_order_fk}}"><i class="fas fa-search"></i></a></span>
-              <span><a class="dropdown-item" data-toggle="tooltip" data-placement="top" title="Cancel order" (click)="cancel(order.id_order_fk)"><i class="fas fa-close"></i></a></span>   
+              <span><a class="dropdown-item" data-toggle="tooltip" data-placement="top" title="View order" routerLink="../orders/order-details/{{order.id}}"><i class="fas fa-search"></i></a></span>
+              <span><a class="dropdown-item" data-toggle="tooltip" data-placement="top" title="Cancel order" (click)="cancel(order.id)"><i class="fas fa-close"></i></a></span>   
               
             </td>
           </tr>
