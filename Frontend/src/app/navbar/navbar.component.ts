@@ -33,15 +33,15 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     //fetch store information
-    this.generalService.getStoreInfo().subscribe((data) => {
-      this.store = data;
-      this.logo = this.store.map((x) => x.logo).toString();
-      //console.log("logo on nav", this.logo)
-    });
+    // this.generalService.getStoreInfo().subscribe((data) => {
+    //   this.store = data;
+    //   this.logo = this.store.map((x) => x.logo).toString();
+    //   //console.log("logo on nav", this.logo)
+    // });
 
-    this.cartService.cartTotals$.subscribe((total) => {
-      this.cartTotal = total;
-    });
+    // this.cartService.cartTotals$.subscribe((total) => {
+    //   this.cartTotal = total;
+    // });
 
     this.cartService.cartDataObs$.subscribe((data) => {
       this.cartData = data;

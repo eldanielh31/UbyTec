@@ -64,12 +64,12 @@ export class TopnavComponent implements OnInit {
 
 
     //fetch currencies
-    this.currencyService.getAllCurrencies()
-      .subscribe(data => {
-        this.currency = data.currencies
-        console.log("this currency", this.currency)
-        localStorage.setItem('currency', JSON.stringify(data.currencies.filter(x => { return x.id_currency == 1 })))
-      })
+    // this.currencyService.getAllCurrencies()
+    //   .subscribe(data => {
+    //     this.currency = data.currencies
+    //     console.log("this currency", this.currency)
+    //     localStorage.setItem('currency', JSON.stringify(data.currencies.filter(x => { return x.id_currency == 1 })))
+    //   })
   }
 
 

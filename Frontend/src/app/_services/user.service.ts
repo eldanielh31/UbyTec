@@ -24,7 +24,7 @@ export class UserService {
   // retrieving products
   getUsers(numberofResults: number = 10): Observable<any> {
     return this.http
-      .get(this.server_url + '/users', {
+      .get(this.server_url + '/cliente', {
         params: {
           limit: numberofResults.toString(),
         },

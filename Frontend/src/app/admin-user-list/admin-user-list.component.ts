@@ -16,12 +16,13 @@ export class AdminUserListComponent implements OnInit {
 
   ngOnInit(): void {
     this.title.setTitle(this.pageTitle)
-
+    
     //fetch user accounts
     this.spinner.show()
     this.userService.getUsers()
     .subscribe(data=>{
-      this.users = data.users
+      console.log(data)
+      this.users = data
       this.spinner.hide()
     })
   }

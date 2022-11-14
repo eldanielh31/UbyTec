@@ -53,7 +53,7 @@ export class CustomerService {
   // retrieving customers
   getCustomers(numberofResults: number = 10): Observable<any> {
     return this.http
-      .get(this.server_url + '/customers', {
+      .get(this.server_url + '/cliente', {
         params: {
           limit: numberofResults.toString(),
         },
@@ -128,6 +128,21 @@ export class CustomerService {
   //update customer information
   updateCustomer(customerInfo: any): Observable<any> {
     return this.http.put(this.server_url + '/cliente', customerInfo)
+      .pipe(catchError(error => {
+        let errorMsg: string;
+        if (error.error instanceof ErrorEvent) {
+          errorMsg = `Error: ${error.error.message};
+    }`
+        } else {
+          errorMsg = this.getServerErrorMessage(error);
+        }
+        return throwError(errorMsg)
+      }));
+  }
+
+  //delete customer information
+  deleteCustomer(cedula: number): Observable<any> {
+    return this.http.delete(this.server_url + '/cliente/' + cedula)
       .pipe(catchError(error => {
         let errorMsg: string;
         if (error.error instanceof ErrorEvent) {

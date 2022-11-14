@@ -13,7 +13,8 @@ export class AdminCustomerListComponent implements OnInit {
   customers: any;
   errorMsg: any;
 
-  constructor(private customerService: CustomerService,
+  constructor(
+    private customerService: CustomerService,
     private title: Title,
     private spinner: NgxSpinnerService) { }
 
@@ -23,8 +24,8 @@ export class AdminCustomerListComponent implements OnInit {
     this.customerService.getCustomers()
     .subscribe(data=>{
       console.log(data)
-      this.count = data.count
-      this.customers = data.customers
+      this.count = data.length
+      this.customers = data
       this.spinner.hide()
     }, err =>{
       this.errorMsg = err
@@ -38,6 +39,19 @@ export class AdminCustomerListComponent implements OnInit {
 
   refresh(){
     this.ngOnInit()
+  }
+
+  cancel(cedula: number){
+    this.customers = this.customers.filter((cus)=>cus.cedula !== cedula)
+
+    this.customerService.deleteCustomer(cedula).subscribe(
+      (data) => {
+        console.log(data)
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
 }
