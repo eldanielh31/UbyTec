@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../_auth/authentication.service';
+import { AdminService } from '../_services/admin.service';
 
 @Component({
   selector: 'app-admin-login',
@@ -26,7 +27,8 @@ export class AdminLoginComponent implements OnInit {
     private route: ActivatedRoute,
     private authService: AuthenticationService,
     private title: Title,
-    private router: Router
+    private router: Router,
+    private customerService: AdminService
   ) {}
 
   ngOnInit(): void {
@@ -56,16 +58,27 @@ export class AdminLoginComponent implements OnInit {
     }
     this.loading = true;
 
-    this.authService.login(this.loginForm.value).subscribe(
+    this.customerService.getAdminByUsername(this.loginForm.value.username).subscribe(
       (data) => {
-        this.loading = false;
-        this.router.navigate([this.returnUrl]);
-        
+        let customer = data[0];
+
+        if (customer && (customer['contrasena'] === this.loginForm.value.password)) {
+          this.successMsg = 'Successful Authentication';
+          this.loading = false;
+          this.submitted = false;
+          localStorage.setItem('currentAdmin', JSON.stringify(customer));
+          this.router.navigate([this.returnUrl]);
+        } else {
+          this.successMsg = 'Error Authentication';
+          this.loading = false;
+          this.submitted = false;
+          this.errorMsg = 'Username or password is incorrect';
+        }
       },
       (err) => {
         this.errorMsg = err.error.reason;
-
         this.loading = false;
+        this.submitted = false;
       }
     );
   }

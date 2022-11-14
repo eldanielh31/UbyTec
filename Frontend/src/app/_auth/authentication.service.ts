@@ -77,12 +77,8 @@ export class AuthenticationService {
 
   //Logged in
   public isLoggedIn(): boolean {
-    const user = this.getUserDetails()
-    if (user) {
-      return user.exp > Date.now() / 1000
-    } else {
-      return false
-    }
+    const customer = localStorage.getItem('currentAdmin')
+    return customer ? true : false;
   }
 
   /**public isAdmin(): boolean {
