@@ -19,7 +19,6 @@ export class DashboardMainComponent implements OnInit {
   p: number = 1;
 
   constructor(
-    private title: Title,
     private orderService: OrderService,
     private spinner: NgxSpinnerService
   ) {}
