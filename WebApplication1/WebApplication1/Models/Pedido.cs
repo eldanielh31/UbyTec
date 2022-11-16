@@ -14,5 +14,7 @@ namespace WebApplication1.Models
         public int id_repartidor {get; set;}
         public string direc_exacta {get; set;}
         public string comprobante {get; set;}
+
+        public int total {get; set;}
     }
 }

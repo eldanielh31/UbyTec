@@ -31,7 +31,8 @@ namespace WebApplication1.Controllers
                     p.id_direccion as id_direccion_pedido, 
                     p.cedula_cliente, 
                     p.direc_exacta, 
-                    p.entregado, 
+                    p.entregado,
+                    p.total,
                     c.usuario, 
                     c.nombre,
                     c.apellido1,
@@ -92,7 +93,7 @@ namespace WebApplication1.Controllers
         public JsonResult Post(Pedido emp)
         {
             string query = @"
-                insert into pedido (id, id_direccion, cedula_cliente, id_repartidor, direc_exacta, comprobante, entregado) 
+                insert into pedido (id, id_direccion, cedula_cliente, id_repartidor, direc_exacta, comprobante, entregado, total) 
                 values(
                 DEFAULT,
                 @id_direccion,
@@ -100,7 +101,8 @@ namespace WebApplication1.Controllers
                 @id_repartidor,
                 @direc_exacta,
                 @comprobante,
-                @entregado
+                @entregado,
+                @total
                 )
                 returning id
             ";
@@ -120,6 +122,7 @@ namespace WebApplication1.Controllers
                     myCommand.Parameters.AddWithValue("@direc_exacta", emp.direc_exacta);
                     myCommand.Parameters.AddWithValue("@comprobante", emp.comprobante);
                     myCommand.Parameters.AddWithValue("@entregado", emp.entregado);
+                    myCommand.Parameters.AddWithValue("@total", emp.total);
                     newpedidoID = myCommand.ExecuteScalar();
 
                     myCon.Close();
