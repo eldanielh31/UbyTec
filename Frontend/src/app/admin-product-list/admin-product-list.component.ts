@@ -9,7 +9,7 @@ import { ProductsService } from '../_services/products.service';
   styleUrls: ['./admin-product-list.component.css'],
 })
 export class AdminProductListComponent implements OnInit {
-  pageTitle = 'Menu list | Maungano Food Express';
+  pageTitle = 'Menu list | UbyTEC';
   menuItems: any;
 
   constructor(
