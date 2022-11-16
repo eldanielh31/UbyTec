@@ -50,14 +50,13 @@ namespace WebApplication1.Controllers
         public JsonResult Post(Solicitud_Comercio emp)
         {
             string query = @"
-                insert into solicitud_comercio (cedula, cedula_admin, cedula_comercio, aceptado)
+                insert into solicitud_comercio (cedula_admin, cedula_comercio, aceptado)
                 values(
-                @cedula,
                 @cedula_admin,
                 @cedula_comercio,
                 @aceptado
                 )
-                returning cedula
+                returning cedula_admin
             ";
 
             DataTable table = new DataTable();
@@ -69,7 +68,6 @@ namespace WebApplication1.Controllers
                 myCon.Open();
                 using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
                 {
-                    myCommand.Parameters.AddWithValue("@cedula", emp.cedula);
                     myCommand.Parameters.AddWithValue("@cedula_admin", emp.cedula_admin);
                     myCommand.Parameters.AddWithValue("@cedula_comercio", emp.cedula_comercio);
                     myCommand.Parameters.AddWithValue("@aceptado", emp.aceptado);

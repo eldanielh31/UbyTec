@@ -129,7 +129,7 @@ namespace WebApplication1.Controllers
             return new JsonResult("Updated Successfully");
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{cedula}")]
         public JsonResult Delete(int cedula)
         {
             string query = @"
@@ -151,7 +151,6 @@ namespace WebApplication1.Controllers
 
                     myReader.Close();
                     myCon.Close();
-
                 }
             }
 

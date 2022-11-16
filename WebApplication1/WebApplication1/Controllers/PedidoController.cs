@@ -21,6 +21,48 @@ namespace WebApplication1.Controllers
             _configuration = configuration;
         }
 
+        [HttpGet("pedidocliente")]
+        public JsonResult GetPedidoCliente()
+        {
+            string query = @"
+                SELECT 
+                    p.id, 
+                    p.comprobante, 
+                    p.id_direccion as id_direccion_pedido, 
+                    p.cedula_cliente, 
+                    p.direc_exacta, 
+                    p.entregado, 
+                    c.usuario, 
+                    c.nombre,
+                    c.apellido1,
+                    c.apellido2,
+                    c.telefono,
+                    c.id_direccion as id_direccion_cliente
+                    FROM
+                    pedido p LEFT JOIN cliente c
+                    ON p.cedula_cliente = c.cedula
+            ";
+
+            DataTable table = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("UbyAppCon");
+            NpgsqlDataReader myReader;
+            using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
+                {
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader);
+                    myReader.Close();
+                    myCon.Close();
+                }
+            }
+
+            return new JsonResult(table);
+        }
+
+
+
         [HttpGet]
         public JsonResult Get()
         {
