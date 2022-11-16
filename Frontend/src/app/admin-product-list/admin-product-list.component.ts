@@ -23,7 +23,7 @@ export class AdminProductListComponent implements OnInit {
     this.spinner.show();
     //fetch menu Items
     this.menuService.getProducts().subscribe((data) => { 
-      this.menuItems = data.products;
+      this.menuItems = data;
       console.log(`Menu`, this.menuItems);
       this.spinner.hide();
     }, err=>{});
@@ -31,5 +31,17 @@ export class AdminProductListComponent implements OnInit {
 
   refresh() {
     this.ngOnInit();
+  }
+
+  cancel(id:number){
+    this.menuItems = this.menuItems.filter((prod) => prod.id !== id);
+    this.menuService.deleteProduct(id).subscribe(
+      (data) => {
+        console.log(data);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 }

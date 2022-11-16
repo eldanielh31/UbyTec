@@ -18,6 +18,8 @@ export class AppComponent {
   _route_url = "/home"
   fname: any;
   lname: any;
+  fnameAdmi: any;
+  lnameAdmi: any;
 
   constructor(private router: Router, public auth: AuthenticationService, private title: Title) { }
 
@@ -25,6 +27,10 @@ export class AppComponent {
     this.title.setTitle(this.pageTitle)
 
     let customerData = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')) : null
+    let adminData = localStorage.getItem('currentAdmin') ? JSON.parse(localStorage.getItem('currentAdmin')) : null
+
+    this.fnameAdmi = adminData ? adminData.nombre : null
+    this.lnameAdmi = adminData ? adminData.apellido1 : null
 
     this.fname = customerData ? customerData.nombre : null
     this.lname = customerData ? customerData.apellido1 : null

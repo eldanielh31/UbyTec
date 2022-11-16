@@ -19,6 +19,23 @@ export class ProductsService {
 
   constructor(private http: HttpClient) {}
 
+  deleteProduct(productId: Number): Observable<ProductModelServer> {
+    return this.http
+      .delete<ProductModelServer>(this.server_url + '/producto/' + productId)
+      .pipe(
+        catchError((error) => {
+          let errorMsg: string;
+          if (error.error instanceof ErrorEvent) {
+            errorMsg = `Error: ${error.error.message};
+      }`;
+          } else {
+            errorMsg = this.getServerErrorMessage(error);
+          }
+          return throwError(errorMsg);
+        })
+      );
+  }
+
   // retrieving products
   getProducts(numberofResults: number = 10): Observable<any> {
     return this.http

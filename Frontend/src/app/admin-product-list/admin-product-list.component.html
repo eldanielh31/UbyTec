@@ -23,43 +23,27 @@
       <table class="table">
         <thead>
           <tr>
-            <th>#</th>
+            <th>ID</th>
             <th>Image</th>
-            <th>Item name</th>
-            <th >Category</th>
-            <th>Sub Category</th>
-            <th>Description</th>
-            <th>Quantity</th>
-            <th>Status</th>
+            <th>Name</th>
+            <th >Identification Store</th>
+            <th>Price</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
           <tr class="text-center no-display" *ngIf="menuItems < 1">No items to display</tr>
           <tr *ngFor="let _menu of menuItems; let i=index">
-            <td>{{i+1}}</td>
-            <td class="image"><img class="rounded-circle"  src="../../assets/img/menu/{{_menu.image}}" alt="" width="50px" height="50px"></td>
-            <td class="text-capitalize">{{_menu.product_name}}</td>
-            <td class="text-capitalize">{{_menu.category}}</td>
-            <td>{{_menu.subcategory}}</td>
-            <td>{{_menu.product_description}}</td>
-            <td>{{_menu.quantity}}</td>
-            <td >
-              <a class="btn"  data-toggle="tooltip" data-placement="top" title="Unpublish" *ngIf="_menu.status>0"><i class="fa fa-check text-success" ></i></a>
-              <a class="btn"  data-toggle="tooltip" data-placement="top" title="Publish" *ngIf="_menu.status<1"><i class="fa fa-times text-danger"></i></a>
-               
-            </td>
+            <td>{{_menu.id}}</td>
+            <td class="image"><img class="rounded-circle"  src={{_menu.foto}} alt="" width="50px" height="50px"></td>
+            <td class="text-capitalize">{{_menu.nombre}}</td>
+            <td class="text-capitalize">{{_menu.cedula_comercio}}</td>
+            <td>{{_menu.precio}}</td>
             <td>
-              <div class="dropdown show">
-                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Select action
-                </a>
-              
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                  <a class="dropdown-item" href="#">Edit</a>
-                  <a class="dropdown-item" href="#">Delete</a>
-                </div>
-              </div>
+              <span><a class="dropdown-item" data-toggle="tooltip" data-placement="top" title="View user" routerLink=""><i
+                    class="fas fa-search"></i></a></span>
+              <span><a class="dropdown-item" data-toggle="tooltip" data-placement="top" title="delete user"
+                  (click)="cancel(_menu.id)"><i class="fas fa-close"></i></a></span>
             </td>
           </tr>
 
