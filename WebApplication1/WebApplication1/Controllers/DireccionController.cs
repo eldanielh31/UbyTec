@@ -86,10 +86,11 @@ namespace WebApplication1.Controllers
         {
             string query = @"
                 update direccion
-                set id = @id,
+                set 
+                id_direccion = @id_direccion,
                 provincia = @provincia,
                 canton = @canton,
-                distrito = @distrito,
+                distrito = @distrito;
             ";
 
             DataTable table = new DataTable();
@@ -100,7 +101,7 @@ namespace WebApplication1.Controllers
                 myCon.Open();
                 using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
                 {
-                    myCommand.Parameters.AddWithValue("@id", emp.id_direccion);
+                    myCommand.Parameters.AddWithValue("@id_direccion", emp.id_direccion);
                     myCommand.Parameters.AddWithValue("@provincia", emp.provincia);
                     myCommand.Parameters.AddWithValue("@canton", emp.canton);
                     myCommand.Parameters.AddWithValue("@distrito", emp.distrito);

@@ -47,5 +47,33 @@ namespace WebApplication1.Controllers
             return new JsonResult(table);
         }
 
+        [HttpGet("cedula/{cedula}")]
+        public JsonResult GetbyCedula(int cedula)
+        {
+            string query = @"
+                select cedula, usuario, contrasena, nombre, apellido1, apellido2, telefono, fecha_nac, provincia, canton, distrito, id_direccion
+	            FROM public.clientedireccion
+                WHERE cedula=@cedula;
+            ";
+
+            DataTable table = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("UbyAppCon");
+            NpgsqlDataReader myReader;
+            using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (NpgsqlCommand myCommand = new NpgsqlCommand(query, myCon))
+                {
+                    myCommand.Parameters.AddWithValue("@cedula", cedula);
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader);
+                    myReader.Close();
+                    myCon.Close();
+                }
+            }
+
+            return new JsonResult(table);
+        }
+
     }
 }
