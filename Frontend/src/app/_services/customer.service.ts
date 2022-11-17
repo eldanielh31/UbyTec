@@ -53,7 +53,7 @@ export class CustomerService {
   // retrieving customers
   getCustomers(numberofResults: number = 10): Observable<any> {
     return this.http
-      .get(this.server_url + '/cliente', {
+      .get(this.server_url + '/clientedireccion', {
         params: {
           limit: numberofResults.toString(),
         },

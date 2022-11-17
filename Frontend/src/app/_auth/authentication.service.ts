@@ -127,8 +127,7 @@ export class AuthenticationService {
 
   //logout
   public logout(): void {
-    this.token = ''
-    window.localStorage.removeItem('userToken')
+    localStorage.removeItem('currentAdmin')
     this.router.navigateByUrl('/admin')
   }
 

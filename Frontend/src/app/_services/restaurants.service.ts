@@ -71,7 +71,7 @@ export class RestaurantsService {
 
 //delete restaurant 
 deleteRestaurant(id: any) {
-  return this.http.delete(this.server_url + '/delete/' + id)
+  return this.http.delete(this.server_url + '/comercioafiliado/' + id)
   .pipe(catchError(error =>{
     let errorMsg: string;
     if (error.error instanceof ErrorEvent) {

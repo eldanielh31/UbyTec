@@ -9,7 +9,7 @@ import { RestaurantsService } from '../_services/restaurants.service';
   styleUrls: ['./admin-restaurant-list.component.css'],
 })
 export class AdminRestaurantListComponent implements OnInit {
-  pageTitle = 'Restaurants list | Maungano Food Express';
+  pageTitle = 'Restaurants list | UbyTEC';
   restaurants: any;
   searchText: string;
   searchState: string;
@@ -27,14 +27,15 @@ export class AdminRestaurantListComponent implements OnInit {
     this.spinner.show();
     //fetch restaurants
     this.restaurantService.getAllSuppliers().subscribe((data) => {
-      this.restaurants = data.suppliers;
+      this.restaurants = data;
+      console.log('restaurantes', data)
       this.spinner.hide();
     });
   }
 
   activationUpdate(id: number, status: number) {
     const updateInfo = {
-      id_supplier: id,
+      cedula: id,
       status: status,
     };
     console.log(status);
@@ -46,21 +47,16 @@ export class AdminRestaurantListComponent implements OnInit {
   }
 
 
-  delete(id: number){
-    
-    if (window.confirm('Are you sure you want to delete this item?')) {
-      this.spinner.show();
-      this.restaurantService.deleteRestaurant(id)
-      .subscribe(data =>{
-        console.log("Data",data)
-        this.ngOnInit()
-        this.spinner.hide();
-      },err=>{
-        console.log(err)
-      })
-    }else{
-      return
-    }
+  delete(cedula: number){
+    this.restaurants = this.restaurants.filter((res) => res.cedula !== cedula);
+    this.restaurantService.deleteRestaurant(cedula).subscribe(
+      (data) => {
+        console.log(data);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   refresh() {

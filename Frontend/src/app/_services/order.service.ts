@@ -20,6 +20,21 @@ export class OrderService {
 
   constructor(private http: HttpClient) {}
 
+  getAllOrdersClient(): Observable<any> {
+    return this.http.get(this.server_url + '/pedido/pedidocliente').pipe(
+      catchError((error) => {
+        let errorMsg: string;
+        if (error.error instanceof ErrorEvent) {
+          errorMsg = `Error: ${error.error.message};
+      }`;
+        } else {
+          errorMsg = this.getServerErrorMessage(error);
+        }
+        return throwError(errorMsg);
+      })
+    );
+  }
+
   //get orders distinct reference id
   getAllDistinctOrders(): Observable<any> {
     return this.http.get(this.server_url + '/pedido').pipe(

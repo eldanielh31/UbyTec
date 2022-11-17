@@ -23,7 +23,6 @@ export class AdminCustomerListComponent implements OnInit {
 
     this.customerService.getCustomers()
     .subscribe(data=>{
-      console.log(data)
       this.count = data.length
       this.customers = data
       this.spinner.hide()

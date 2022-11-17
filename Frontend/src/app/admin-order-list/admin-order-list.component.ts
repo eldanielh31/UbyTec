@@ -9,7 +9,7 @@ import { OrderService } from '../_services/order.service';
   styleUrls: ['./admin-order-list.component.css'],
 })
 export class AdminOrderListComponent implements OnInit {
-  pageTitle = 'Orders list | Maungano Food Express';
+  pageTitle = 'Orders list | UbyTEC';
   ordersOpen: any;
 
   public searchText: string;
@@ -26,10 +26,10 @@ export class AdminOrderListComponent implements OnInit {
   ngOnInit(): void {
     this.title.setTitle(this.pageTitle);
     this.spinner.show();
-    this.orderService.getAllDistinctOrders().subscribe((data) => {
+    this.orderService.getAllOrdersClient().subscribe((data) => {
       console.log(data);
       this.count = data.count;
-      this.ordersOpen = data.orders;
+      this.ordersOpen = data;
       this.spinner.hide();
     },
     err=>{});
@@ -37,5 +37,17 @@ export class AdminOrderListComponent implements OnInit {
 
   refresh() {
     this.ngOnInit();
+  }
+
+  cancel(id: number){
+    this.ordersOpen = this.ordersOpen.filter((ord) => ord.id !== id);
+    this.orderService.deleteOrder(id).subscribe(
+      (data) => {
+        console.log(data);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 }
