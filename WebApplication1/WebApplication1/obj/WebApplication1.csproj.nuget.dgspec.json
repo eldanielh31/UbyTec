@@ -42,6 +42,10 @@
               "target": "Package",
               "version": "[3.1.16, )"
             },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[2.18.0, )"
+            },
             "Npgsql": {
               "target": "Package",
               "version": "[5.0.7, )"

@@ -110,7 +110,6 @@ namespace WebApplication1.Controllers
             return new JsonResult(table);
         }
 
-
         [HttpPost]
         public JsonResult Post(Cliente emp)
         {
