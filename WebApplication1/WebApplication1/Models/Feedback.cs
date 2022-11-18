@@ -14,4 +14,6 @@ public class Feedback{
     public string comentario{get; set;}
     public int cedula_cliente{get; set;}
     public int id_producto{get; set;}
+
+    public string nombre_cliente{get; set;}
 }
