@@ -162,11 +162,11 @@ export class OrderService {
   }
 
   //cancel order
-  cancelOrder(updateInfo: any): Observable<any> {
+  cancelOrder(id: any): Observable<any> {
     var headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
     return this.http
-      .post(this.server_url + '/cancel', updateInfo, { headers: headers })
+      .delete(this.server_url + '/pedido/' + id)
       .pipe(
         catchError((error) => {
           let errorMsg: string;

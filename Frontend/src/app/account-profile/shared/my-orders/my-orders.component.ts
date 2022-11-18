@@ -15,61 +15,51 @@ export class MyOrdersComponent implements OnInit {
   ordersOpen: any;
   ordersClosed: any;
   p: number = 1;
-  count: any
+  count: any;
+  currentCedula: any;
 
   constructor(
     private customerService: CustomerService,
     public custAuthService: CustomerAuthenticationService,
     private orderService: OrderService,
     private spinner: NgxSpinnerService
-  ) {}
+  ) { }
 
   ngOnInit() {
-    //fetch user token and decode
-    let customerToken = this.custAuthService.getToken();
-    console.log('Customer token', customerToken);
-    var decoded = jwt_decode(customerToken);
-    console.log('Decoded token', decoded.id_customer);
+    //fetch user 
+    this.currentCedula = JSON.parse(localStorage.getItem("currentUser")).cedula
 
     //fetch orders by customer id
     this.spinner.show();
-    this.orderService.getAllDistinctOrders().subscribe(
+    this.orderService.getAllOrdersClient().subscribe(
       (data) => {
-        console.log(data);
+        data = data.filter(obj => obj.cedula_cliente === this.currentCedula)
         //filter open orders
-        this.ordersOpen = data.orders.filter(obj => obj.order_state ===  0 || obj.order_state ===  1 || obj.order_state ===  2);
-        console.log("Distinct orders", this.ordersOpen )
-         //filter closed orders
-         this.ordersClosed = data.orders.filter(obj => obj.order_state ===  3 || obj.order_state ===  4 );
+        this.ordersOpen = data.filter(obj => obj.entregado === false);
+        //filter closed orders
+        this.ordersClosed = data.filter(obj => obj.entregado === true);
         this.spinner.hide();
       },
-      (err) => {}
+      (err) => { }
     );
   }
 
-
-  cancel(id:number, reference: string){
-    if (window.confirm(`Are you sure you want to cancel order with reference ${reference}?`)){
+  cancel(id: number) {
+    if (window.confirm(`Are you sure you want to cancel order with reference ${id}?`)) {
       this.spinner.show();
       //call cancel order api
-      const updateInfo ={
-        id_order: id,
-        order_state:4,
-        cancelledBy:"Customer cancellation"
-      }
-      this.orderService.cancelOrder(updateInfo)
-      .subscribe(data =>{
-        console.log("Distinct orders after refresh", data )
-         this.ngOnInit()
-        this.spinner.hide();
-        
-      })
-    } else{
+      this.orderService.cancelOrder(id)
+        .subscribe(data => {
+          console.log("Distinct orders after refresh", data)
+          this.ngOnInit()
+          this.spinner.hide();
+        })
+    } else {
       return;
     }
   }
 
-  refresh(){
+  refresh() {
     this.ngOnInit()
   }
 }

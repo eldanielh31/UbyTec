@@ -5,6 +5,7 @@ import jwt_decode from 'jwt-decode';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
+import { DirectionService } from 'src/app/_services/direction.service';
 
 @Component({
   selector: 'app-account-details',
@@ -12,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./account-details.component.css'],
 })
 export class AccountDetailsComponent implements OnInit {
-  pageTitle = 'Customer account overview | Maungano Food Express';
+  pageTitle = 'Customer account overview | UbyTEC';
   customerProfileForm: FormGroup;
 
   userData: any;
@@ -25,6 +26,9 @@ export class AccountDetailsComponent implements OnInit {
   cedula: any;
   password: any;
   id_direction: any;
+  province: any;
+  canton: any;
+  district: any;
 
   updating: boolean = false
   errorMsg: any;
@@ -33,6 +37,7 @@ export class AccountDetailsComponent implements OnInit {
   constructor(
     private title: Title,
     private customerService: CustomerService,
+    private directionService: DirectionService,
     private fb: FormBuilder,
     private toast: ToastrService,
   ) { }
@@ -60,7 +65,7 @@ export class AccountDetailsComponent implements OnInit {
     this.cedula = this.customerProfile.cedula;
 
     this.customerService.getCustomerById(this.cedula).subscribe(
-      data=>{
+      data => {
         let currentUser = data[0]
         localStorage.setItem('currentUser', JSON.stringify(currentUser))
       }
@@ -75,6 +80,10 @@ export class AccountDetailsComponent implements OnInit {
     this.dob = this.customerProfile.fecha_nac;
     this.password = this.customerProfile.contrasena;
     this.id_direction = this.customerProfile.id_direccion;
+
+    this.province = this.customerProfile.provincia;
+    this.canton = this.customerProfile.canton;
+    this.district = this.customerProfile.distrito;
 
     //format date before patching it to date  input element
     const date_of_birth = function formatDate(_date) {
@@ -94,7 +103,11 @@ export class AccountDetailsComponent implements OnInit {
       username: this.username,
       password: this.password,
       primaryPhone: this.primaryPhone,
-      dob: date_of_birth(this.dob)
+      dob: date_of_birth(this.dob),
+
+      province: this.province,
+      canton: this.canton,
+      district: this.district
     });
   }
 
@@ -108,6 +121,10 @@ export class AccountDetailsComponent implements OnInit {
     var primaryPhone = this.customerProfileForm.value.primaryPhone
     var dob = this.customerProfileForm.value.dob
 
+    var province = this.customerProfileForm.value.province
+    var canton = this.customerProfileForm.value.canton
+    var district = this.customerProfileForm.value.district
+
     const customer = {
       cedula: this.cedula,
       nombre: fname,
@@ -118,6 +135,13 @@ export class AccountDetailsComponent implements OnInit {
       telefono: primaryPhone,
       fecha_nac: dob,
       id_direccion: this.id_direction
+    }
+
+    const direction = {
+      id_direccion: this.id_direction,
+      provincia: province,
+      canton: canton,
+      distrito: district
     }
 
     this.customerService.updateCustomer(customer)
@@ -137,6 +161,26 @@ export class AccountDetailsComponent implements OnInit {
       }, err => {
         this.errorMsg = err
       })
+
+    this.directionService.updateDirection(direction)
+      .subscribe(data => {
+        this.toast.success(
+          `Direction information details updated`,
+          'Information updated',
+          {
+            timeOut: 3600,
+            progressBar: true,
+            progressAnimation: 'increasing',
+            positionClass: 'toast-top-right',
+          }
+        );
+        this.updating = false
+        this.ngOnInit()
+      }, err => {
+        this.errorMsg = err
+      })
+
+    this.ngOnInit()
 
   }
 }

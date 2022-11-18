@@ -19,6 +19,21 @@ export class DirectionService {
 
   constructor(private http: HttpClient) { }
 
+  //update direction information
+  updateDirection(directionInfo: any): Observable<any> {
+    return this.http.put(this.server_url + '/direccion', directionInfo)
+      .pipe(catchError(error => {
+        let errorMsg: string;
+        if (error.error instanceof ErrorEvent) {
+          errorMsg = `Error: ${error.error.message};
+    }`
+        } else {
+          errorMsg = this.getServerErrorMessage(error);
+        }
+        return throwError(errorMsg)
+      }));
+  }
+
   //post account
   postDirection(direction: any): Observable<any> {
     return this.http.post(this.server_url + '/direccion', direction).pipe(

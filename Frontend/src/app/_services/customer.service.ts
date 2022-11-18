@@ -91,7 +91,7 @@ export class CustomerService {
 
   getCustomerById(customerId: Number): Observable<CustomersModelServer> {
     return this.http
-      .get<CustomersModelServer>(this.server_url + '/cliente/cedula/' + customerId)
+      .get<CustomersModelServer>(this.server_url + '/clientedireccion/cedula/' + customerId)
       .pipe(
         catchError((error) => {
           let errorMsg: string;
