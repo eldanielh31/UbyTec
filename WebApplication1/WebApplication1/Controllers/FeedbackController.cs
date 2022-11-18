@@ -46,6 +46,13 @@ namespace WebApplication1.Controllers
             return allFeedback;
         }
 
+        [HttpGet("{id_producto}")]
+        public async Task<List<Feedback>> GetbyIdProducto(int id_producto)
+        {
+            var allFeedback = await this.feedbackCollection.Find(Builders<Feedback>.Filter.Eq("id_producto", id_producto)).ToListAsync();
+            return allFeedback;
+        }
+
         [HttpDelete("{id}")]
         public async Task<DeleteResult> Delete(string id)
         {
