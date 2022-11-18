@@ -27,18 +27,22 @@
           </div>
 
           <div class="add-to-cart">
-            <div class="qty-label">
+            <div class="display-5">
               Quantity
-              <div class="input-number d-flex justify-content-between align-center w-100 flex-row-reverse">
-                <span (click)="Increase()" class="qty-up"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                <input class="" #quantity readonly type="number" value=0>
-                <span (click)="Decrease()" class="qty-down"><i class="fa fa-minus" aria-hidden="true"></i></span>
+              <div class="number-input md-number-input">
+                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
+                <input #quantity class="quantity" min="0" name="quantity" value="1" type="number">
+                <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
               </div>
             </div>
-            <button (click)="addToCart(product?.id)" class="add-to-cart-btn">
+            <button (click)="addToCart(product?.id, quantity.value)" class="add-to-cart-btn">
               Add to cart
             </button>
           </div>
+
+          
+
+
         </div>
       </div>
 
