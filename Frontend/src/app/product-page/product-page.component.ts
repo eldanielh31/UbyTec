@@ -62,7 +62,20 @@ export class ProductPageComponent implements OnInit {
   }
 
   sendReview(review){
-    console.log(review)
+    let feedback = {
+      comentario : review,
+      cedula_cliente : this.currentUser.cedula,
+      id_producto: this.id,
+      nombre_cliente: `${this.currentUser.nombre} ${this.currentUser.apellido1} ${this.currentUser.apellido2}`
+    }
+
+    this.feedbackService.postFeedback(feedback).subscribe(
+      data => {
+        console.log(data)
+        this.ngOnInit()
+      }
+    )
+
   }
 
   addToCart(id: Number) {

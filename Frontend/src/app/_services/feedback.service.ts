@@ -38,6 +38,22 @@ export class FeedbackService {
       );
   }
 
+  //post Feedback
+  postFeedback(feedback: any): Observable<any> {
+    return this.http.post(this.server_url + '/feedback', feedback).pipe(
+      catchError((error) => {
+        let errorMsg: string;
+        if (error.error instanceof ErrorEvent) {
+          errorMsg = `Error: ${error.error.message};
+      }`;
+        } else {
+          errorMsg = this.getServerErrorMessage(error);
+        }
+        return throwError(errorMsg);
+      })
+    );
+  }
+
 
 
   //Get Http server errors
