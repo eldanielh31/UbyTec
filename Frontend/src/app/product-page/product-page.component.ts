@@ -1,9 +1,11 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, ParamMap} from "@angular/router";
-import {ProductsService} from "../_services/products.service";
-import {ProductModelServer} from "../_models/products";
-import {map} from "rxjs/operators";
-import {CartService} from "../_services/cart.service";
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, ParamMap } from "@angular/router";
+import { ProductsService } from "../_services/products.service";
+import { ProductModelServer } from "../_models/products";
+import { map } from "rxjs/operators";
+import { CartService } from "../_services/cart.service";
+import { FeedbackService } from "../_services/feedback.service";
+import { CustomerService } from '../_services/customer.service';
 
 declare let $: any;
 
@@ -13,17 +15,21 @@ declare let $: any;
   styleUrls: ['./product-page.component.css']
 })
 
-export class ProductPageComponent implements AfterViewInit, OnInit {
+export class ProductPageComponent implements OnInit {
   id: Number;
-  product;
+  product: any;
+  feedback: any[] = [];
   thumbimages: any[] = [];
+  currentUser: any;
 
 
   @ViewChild('quantity') quantityInput;
 
   constructor(private route: ActivatedRoute,
-              private productService: ProductsService,
-              private cartService: CartService) {
+    private productService: ProductsService,
+    private cartService: CartService,
+    private feedbackService: FeedbackService,
+    private customerService: CustomerService) {
 
 
   }
@@ -44,47 +50,19 @@ export class ProductPageComponent implements AfterViewInit, OnInit {
         this.thumbimages = [prod.foto]
 
       });
+
+      this.feedbackService.getFeedbackByIdProducto(this.id).subscribe(fbs=>{
+        this.feedback = fbs;
+      })
+
     });
+    
+    this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
   }
 
-
-  ngAfterViewInit(): void {
-    // Product Main img Slick
-    // $('#product-main-img').slick({
-    //   infinite: true,
-    //   speed: 300,
-    //   dots: false,
-    //   arrows: true,
-    //   fade: true,
-    //   asNavFor: '#product-imgs',
-    // });
-
-    // // Product imgs Slick
-    // $('#product-imgs').slick({
-    //   slidesToShow: 3,
-    //   slidesToScroll: 1,
-    //   arrows: true,
-    //   centerMode: true,
-    //   focusOnSelect: true,
-    //   centerPadding: 0,
-    //   vertical: true,
-    //   asNavFor: '#product-main-img',
-    //   responsive: [{
-    //     breakpoint: 991,
-    //     settings: {
-    //       vertical: false,
-    //       arrows: false,
-    //       dots: true,
-    //     }
-    //   },
-    //   ]
-    // });
-
-    // Product img zoom
-    // var zoomMainProduct = document.getElementById('product-main-img');
-    // if (zoomMainProduct) {
-    //   $('#product-main-img .product-preview').zoom();
-    // }
+  sendReview(review){
+    console.log(review)
   }
 
   addToCart(id: Number) {
@@ -93,7 +71,7 @@ export class ProductPageComponent implements AfterViewInit, OnInit {
 
   Increase() {
     let value = parseInt(this.quantityInput.nativeElement.value);
-    if (this.product.quantity >= 1){
+    if (this.product.quantity >= 1) {
       value++;
 
       if (value > this.product.quantity) {
@@ -109,7 +87,7 @@ export class ProductPageComponent implements AfterViewInit, OnInit {
 
   Decrease() {
     let value = parseInt(this.quantityInput.nativeElement.value);
-    if (this.product.quantity > 0){
+    if (this.product.quantity > 0) {
       value--;
 
       if (value <= 0) {
@@ -120,8 +98,8 @@ export class ProductPageComponent implements AfterViewInit, OnInit {
       return;
     }
     this.quantityInput.nativeElement.value = value.toString();
-  
 
-}
+
+  }
 
 }

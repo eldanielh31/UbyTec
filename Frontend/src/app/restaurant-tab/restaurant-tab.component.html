@@ -64,10 +64,9 @@
             <div class="w-100 d-flex flex-lg-row flex-sm-column justify-content-between" *ngIf="contentLoadedProds">
               <div class="col-sm-12 col-md-12 col-lg-3  restaurant" *ngFor="let _menu of products">
                 <!--<div class="badge"><span class="badge badge-danger">New</span></div>-->
-                <a routerLink="/products/{{_menu.id}}"><img src="../../assets/img/menu/burger3.png" alt="">
+                <a routerLink="/products/{{_menu.id}}"><img src={{_menu.foto}} alt="">
                 <h3>{{_menu.nombre}}</h3></a>
                 <!-- <p><strong>{{'FEATUREDMENU.Category' | translate}}:</strong> {{_menu.category}} </p> -->
-                <p class="ingredients">{{_menu.foto}} ...</p>
                 <p class="currency"> {{_menu.precio | currency: '₡'}}</p>
                 <button class="btn"
                 (click)="addToCart(_menu.id)">Order</button>
