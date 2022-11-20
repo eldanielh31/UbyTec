@@ -95,3 +95,8 @@ C:\Users\danbg\Desktop\UbyTec\WebApplication1\WebApplication1\bin\Debug\netcorea
 C:\Users\danbg\Desktop\UbyTec\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Security.AccessControl.dll
 C:\Users\danbg\Desktop\UbyTec\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\System.Security.Principal.Windows.dll
 C:\Users\danbg\Desktop\UbyTec\WebApplication1\WebApplication1\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Security.Principal.Windows.dll
+C:\Users\danbg\Desktop\UbyTec\WebApplication1\WebApplication1\obj\Debug\netcoreapp3.1\staticwebassets\WebApplication1.StaticWebAssets.Pack.cache
+C:\Users\danbg\Desktop\UbyTec\WebApplication1\WebApplication1\obj\Debug\netcoreapp3.1\staticwebassets\msbuild.WebApplication1.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\danbg\Desktop\UbyTec\WebApplication1\WebApplication1\obj\Debug\netcoreapp3.1\staticwebassets\msbuild.build.WebApplication1.props
+C:\Users\danbg\Desktop\UbyTec\WebApplication1\WebApplication1\obj\Debug\netcoreapp3.1\staticwebassets\msbuild.buildMultiTargeting.WebApplication1.props
+C:\Users\danbg\Desktop\UbyTec\WebApplication1\WebApplication1\obj\Debug\netcoreapp3.1\staticwebassets\msbuild.buildTransitive.WebApplication1.props

@@ -54,6 +54,10 @@ namespace WebApplication1
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseHsts();
+
+            app.UseHttpsRedirection();
+
             app.UseRouting();
 
             app.UseAuthorization();
