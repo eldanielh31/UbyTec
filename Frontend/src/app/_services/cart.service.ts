@@ -169,7 +169,7 @@ export class CartService {
           });
 
           this.toast.success(
-            `${prod.product_name} quantity added in the cart.`,
+            `${prod.product_name} vsd`,
             'Product Updated',
             {
               timeOut: 3600,

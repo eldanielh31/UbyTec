@@ -89,7 +89,7 @@ export class CustomerService {
       );
   }
 
-  getCustomerById(customerId: Number): Observable<CustomersModelServer> {
+  getCustomerById(customerId: Number): Observable<any> {
     return this.http
       .get<CustomersModelServer>(this.server_url + '/clientedireccion/cedula/' + customerId)
       .pipe(

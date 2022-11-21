@@ -7,6 +7,14 @@ export class SupplierModelServer {
     status: number;
     createdAt:Date;
     updatedAt:Date;
+    
+    cedula: number;
+    nombre: string;
+    sinpe: number;
+    email: string;
+    provincia: string;
+    canton: string;
+    distrito: string;
 }
 
 export interface SupplierResponse{

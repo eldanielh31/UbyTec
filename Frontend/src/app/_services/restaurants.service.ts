@@ -37,7 +37,7 @@ export class RestaurantsService {
   }
 
   //retrieving restaurant by ID
-  getSingleRestaurant(productId: Number): Observable<SupplierModelServer> {
+  getSingleRestaurant(productId: Number): Observable<any> {
     return this.http
       .get<SupplierModelServer>(this.server_url + '/comercioaceptado/' + productId)
       .pipe(catchError(error =>{

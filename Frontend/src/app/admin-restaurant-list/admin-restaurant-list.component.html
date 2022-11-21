@@ -1,74 +1,84 @@
-<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "yellow" type = "ball-clip-rotate-multiple" [fullScreen] = "false"><p style="color: white; font-size:20px;  margin-top:50px">loading...</p> </ngx-spinner>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="yellow" type="ball-clip-rotate-multiple"
+  [fullScreen]="false">
+  <p style="color: white; font-size:20px;  margin-top:50px">loading...</p>
+</ngx-spinner>
 <div class="card">
   <div class="card-header w-100 d-flex flex-row justify-content-between">
     <h3 class="card-title font-weight-bold">Restaurants</h3>
     <!---Search field-->
     <span class="w-75 d-flex flex-row justify-content-between ml-5 ">
-      <input type="text" name="" id="" class="form-control mr-2" placeholder="Search by name..." [(ngModel)]="searchText" name="searchText">
-    <!---END Search field-->
-    
-        
+      <input type="text" name="" id="" class="form-control mr-2" placeholder="Search by name..."
+        [(ngModel)]="searchText" name="searchText">
+      <!---END Search field-->
+
+
       <!--Search by state-->
       <select name="" id="" class="form-control" [(ngModel)]="searchState" name="searchState">
         <option selected value="">All</option>
         <option value="1">Activated</option>
         <option value="0">Deactivated</option>
-        
+
       </select>
       <!--End Search by state-->
-      </span>
-      
-      <!---END Search field-->
+    </span>
 
-      <div class="card-tools ml-auto">
-        <a class="btn" (click)="refresh()" data-toggle="tooltip" data-placement="top" title="Refresh"><i class="fas fa-sync-alt"></i></a>
-        <a class="btn" routerLink="../create"><i class="fas fa-2x fa-plus-circle"></i></a>
-      </div>
+    <!---END Search field-->
+
+    <div class="card-tools ml-auto">
+      <a class="btn" (click)="refresh()" data-toggle="tooltip" data-placement="top" title="Refresh"><i
+          class="fas fa-sync-alt"></i></a>
+      <a class="btn" routerLink="../create"><i class="fas fa-2x fa-plus-circle"></i></a>
     </div>
-    <!-- /.card-header -->
-    <div class="card-body p-0">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Identification</th>
-            <th>Restaurant name</th>
-            <th>Sinpe</th>
-            <th>Email</th>
-            <th>Province</th>
-            <th>Canton</th>
-            <th>District</th>
-            <th class="text-center">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="text-center no-display" *ngIf="restaurants < 1">
-            <td class="text-center" colSpan="7">
-              No orders in list 
-            </td>
-          </tr>
-          <tr *ngFor="let restaurant of restaurants | searchBy:{supplier_name:
+  </div>
+  <!-- /.card-header -->
+  <div class="card-body p-0">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Identification</th>
+          <th>Restaurant name</th>
+          <th>Sinpe</th>
+          <th>Email</th>
+          <th>Province</th>
+          <th>Canton</th>
+          <th>District</th>
+          <th class="text-center">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="text-center no-display" *ngIf="restaurants < 1">
+          <td class="text-center" colSpan="7">
+            No orders in list
+          </td>
+        </tr>
+        <tr
+          *ngFor="let restaurant of restaurants | searchBy:{supplier_name:
             searchText}  | searchBy:{status:
               searchState} |  paginate: { itemsPerPage: 10, currentPage: p,totalItems: count, autoHide: true }; let i=index">
-            <td>{{restaurant.cedula}}</td>
-            <td>{{restaurant.nombre}}</td>
-            <td>{{restaurant.sinpe}}</td>
-            <td>{{restaurant.email}}</td>
-            <td>{{restaurant.provincia}}</td>
-            <td>{{restaurant.canton}}</td>
-            <td>{{restaurant.distrito}}</td>
-            <td>
-              <span><a class="dropdown-item" data-toggle="tooltip" data-placement="top" title="View details" routerLink="../order-details/{{restaurant.cedula}}"><i class="fas fa-search"></i></a></span>
-              <span><a class="dropdown-item" data-toggle="tooltip" data-placement="top" title="Delete records" (click)="delete(restaurant.cedula)"><i class="fas fa-trash"></i></a></span>   
-                  
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="row">
-      <div class="col s12 text-left paginate">
-        <pagination-controls class="pagination" (pageChange)="p= $event"></pagination-controls>
-      </div>
-    </div>
-    <!-- /.card-body -->
+          <td>{{restaurant.cedula}}</td>
+          <td>{{restaurant.nombre}}</td>
+          <td>{{restaurant.sinpe}}</td>
+          <td>{{restaurant.email}}</td>
+          <td>{{restaurant.provincia}}</td>
+          <td>{{restaurant.canton}}</td>
+          <td>{{restaurant.distrito}}</td>
+          <td>
+            <span><a class="dropdown-item" data-toggle="tooltip" data-placement="top" title="View details"
+                routerLink="../order-details/{{restaurant.cedula}}"><i class="fas fa-search"></i></a></span>
+            <span><a class="dropdown-item" data-toggle="tooltip" data-placement="top" title="Report"
+                (click)="reportPDF(restaurant.cedula)"><i class="fas fa-file-image"></i></a></span>
+            <span><a class="dropdown-item" data-toggle="tooltip" data-placement="top" title="Delete records"
+                (click)="delete(restaurant.cedula)"><i class="fas fa-trash"></i></a></span>
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+  <div class="row">
+    <div class="col s12 text-left paginate">
+      <pagination-controls class="pagination" (pageChange)="p= $event"></pagination-controls>
+    </div>
+  </div>
+  <!-- /.card-body -->
+</div>

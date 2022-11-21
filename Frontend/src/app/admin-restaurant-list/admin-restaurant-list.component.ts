@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { InvoiceService } from '../_services/invoice.service';
+import { OrderService } from '../_services/order.service';
 import { RestaurantsService } from '../_services/restaurants.service';
 
 @Component({
@@ -20,7 +22,9 @@ export class AdminRestaurantListComponent implements OnInit {
   constructor(
     private title: Title,
     private restaurantService: RestaurantsService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private orderService: OrderService,
+    private invoiceService: InvoiceService,
   ) {}
 
   ngOnInit(): void {
@@ -28,7 +32,6 @@ export class AdminRestaurantListComponent implements OnInit {
     //fetch restaurants
     this.restaurantService.getAllSuppliers().subscribe((data) => {
       this.restaurants = data;
-      console.log('restaurantes', data)
       this.spinner.hide();
     });
   }
@@ -40,6 +43,7 @@ export class AdminRestaurantListComponent implements OnInit {
     };
     console.log(status);
     console.log('Supplier id', id);
+
     this.restaurantService.updateStatus(updateInfo).subscribe((data) => {
       console.log(data);
       this.ngOnInit();
@@ -61,5 +65,35 @@ export class AdminRestaurantListComponent implements OnInit {
 
   refresh() {
     this.ngOnInit();
+  }
+
+  reportPDF(cedula: number){
+    this.orderService.getVentasXAfiliadoByCedula(cedula).subscribe(
+      ven=>{
+        ven=ven[0]
+        this.restaurantService.getSingleRestaurant(cedula).subscribe(
+          rest=>{
+            rest = rest[0]
+            this.invoiceService.invoice.customerName = rest.nombre
+            this.invoiceService.invoice.address = `${rest.provincia} ${rest.canton} ${rest.distrito}`
+            this.invoiceService.invoice.contactNo = rest.sinpe
+            this.invoiceService.invoice.email = rest.email
+
+            this.invoiceService.invoice.products = [
+              {
+                identification: ven.cedula_comercio,
+                total: ven.total_vendido,
+                qty: ven.cantidad_ventas
+              }
+            ]
+
+            console.log(this.invoiceService.invoice)
+
+            this.invoiceService.generatePDF()
+          }
+        )
+
+      }
+    )
   }
 }
