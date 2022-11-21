@@ -52,7 +52,7 @@ namespace WebApplication1.Controllers
             string query = @"
                 SELECT *
 	            FROM consolidado_ventas
-                WHERE cedula_comercio=@cedula;
+                WHERE cedula=@cedula;
             ";
 
             DataTable table = new DataTable();
